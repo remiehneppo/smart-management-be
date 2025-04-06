@@ -1,0 +1,786 @@
+basePath: /api/v1
+definitions:
+  types.CreateReportRequest:
+    properties:
+      report:
+        type: string
+      report_file:
+        type: string
+      task_id:
+        type: string
+    required:
+    - report
+    - task_id
+    type: object
+  types.CreateTaskRequest:
+    properties:
+      assignee:
+        type: string
+      deadline:
+        type: integer
+      description:
+        type: string
+      start_at:
+        type: integer
+      title:
+        type: string
+    required:
+    - assignee
+    - deadline
+    - description
+    - start_at
+    - title
+    type: object
+  types.DeleteReportRequest:
+    properties:
+      report_id:
+        type: string
+    required:
+    - report_id
+    type: object
+  types.FeedbackRequest:
+    properties:
+      feedback:
+        type: string
+      report_id:
+        type: string
+    required:
+    - feedback
+    - report_id
+    type: object
+  types.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  types.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  types.PaginatedData:
+    properties:
+      items: {}
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  types.PaginatedResponse:
+    properties:
+      data:
+        $ref: '#/definitions/types.PaginatedData'
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  types.RefreshRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  types.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  types.UpdatePasswordRequest:
+    properties:
+      new_password:
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  types.UpdateReportRequest:
+    properties:
+      report:
+        type: string
+      report_id:
+        type: string
+    required:
+    - report
+    - report_id
+    type: object
+  types.UpdateTaskRequest:
+    properties:
+      assignee:
+        type: string
+      deadline:
+        type: integer
+      description:
+        type: string
+      progress:
+        type: integer
+      start_at:
+        type: integer
+      status:
+        type: string
+      task_id:
+        type: string
+      title:
+        type: string
+    type: object
+  types.User:
+    properties:
+      created_at:
+        type: integer
+      full_name:
+        type: string
+      id:
+        type: string
+      management_level:
+        type: integer
+      password:
+        type: string
+      updated_at:
+        type: integer
+      username:
+        type: string
+      workspace:
+        type: string
+      workspace_role:
+        type: string
+    type: object
+host: localhost:8088
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://www.example.com/support
+  description: Task Management API with Golang
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Task Management API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates user and returns access and refresh tokens
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/types.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.LoginResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Authentication failed
+          schema:
+            $ref: '#/definitions/types.Response'
+      summary: User login
+      tags:
+      - authentication
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logs out the current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: User logout
+      tags:
+      - authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refreshes access token using a valid refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: refresh
+        required: true
+        schema:
+          $ref: '#/definitions/types.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Refresh successful
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.LoginResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Invalid refresh token
+          schema:
+            $ref: '#/definitions/types.Response'
+      summary: Refresh tokens
+      tags:
+      - authentication
+  /tasks/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Returns a specific task by its ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Get a task by ID
+      tags:
+      - tasks
+  /tasks/assigned:
+    get:
+      consumes:
+      - application/json
+      description: Returns a paginated list of tasks assigned to the authenticated
+        user
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.PaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Get tasks assigned to the current user
+      tags:
+      - tasks
+  /tasks/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new task with the provided information
+      parameters:
+      - description: Task information
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/types.CreateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Create a new task
+      tags:
+      - tasks
+  /tasks/created:
+    get:
+      consumes:
+      - application/json
+      description: Returns a paginated list of tasks created by the authenticated
+        user
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.PaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Get tasks created by the current user
+      tags:
+      - tasks
+  /tasks/delete/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Deletes a task by its ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete a task
+      tags:
+      - tasks
+  /tasks/filter:
+    get:
+      consumes:
+      - application/json
+      description: Returns a paginated list of tasks matching the filter criteria
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by deadline starting from (unix timestamp)
+        in: query
+        name: deadlineFrom
+        type: integer
+      - description: Filter by deadline up to (unix timestamp)
+        in: query
+        name: deadlineTo
+        type: integer
+      - description: Filter by start date from (unix timestamp)
+        in: query
+        name: startFrom
+        type: integer
+      - description: Filter by start date to (unix timestamp)
+        in: query
+        name: startTo
+        type: integer
+      - description: Filter by report date from (unix timestamp)
+        in: query
+        name: reportFrom
+        type: integer
+      - description: Filter by report date to (unix timestamp)
+        in: query
+        name: reportTo
+        type: integer
+      - description: Filter by task title (partial match)
+        in: query
+        name: title
+        type: string
+      - description: Filter by task status
+        in: query
+        name: status
+        type: string
+      - description: Filter tasks assigned to current user
+        in: query
+        name: assignee
+        type: string
+      - description: Filter tasks created by current user
+        in: query
+        name: creator
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.PaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Filter tasks based on criteria
+      tags:
+      - tasks
+  /tasks/report/add:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new report for a specific task
+      parameters:
+      - description: Report information
+        in: body
+        name: report
+        required: true
+        schema:
+          $ref: '#/definitions/types.CreateReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Report added successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format or validation error
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Task not found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Add a report to a task
+      tags:
+      - reports
+  /tasks/report/delete:
+    post:
+      consumes:
+      - application/json
+      description: Deletes an existing report by ID
+      parameters:
+      - description: Delete report request with report ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.DeleteReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Report deleted successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized or not the report creator
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Report not found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete a report
+      tags:
+      - reports
+  /tasks/report/feedback:
+    post:
+      consumes:
+      - application/json
+      description: Adds feedback to a specific report
+      parameters:
+      - description: Feedback information
+        in: body
+        name: feedback
+        required: true
+        schema:
+          $ref: '#/definitions/types.FeedbackRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Feedback added successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format or validation error
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Report not found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Provide feedback on a report
+      tags:
+      - reports
+  /tasks/report/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates the report information for a task
+      parameters:
+      - description: Updated report information
+        in: body
+        name: report
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdateReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Report updated successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format or validation error
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized or not the report creator
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Report not found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Update an existing report
+      tags:
+      - reports
+  /tasks/update:
+    post:
+      consumes:
+      - application/json
+      description: Updates a task with the provided information
+      parameters:
+      - description: Updated task information
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Update an existing task
+      tags:
+      - tasks
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      description: Returns the authenticated user's profile information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User information retrieved successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.User'
+              type: object
+        "401":
+          description: Unauthorized or invalid token
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Get user information
+      tags:
+      - users
+  /users/password:
+    post:
+      consumes:
+      - application/json
+      description: Changes the authenticated user's password
+      parameters:
+      - description: Old and new password
+        in: body
+        name: passwordData
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdatePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Password updated successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized, invalid token or incorrect old password
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Update user password
+      tags:
+      - users
+  /users/workspace:
+    get:
+      consumes:
+      - application/json
+      description: Returns a list of users in the same workspace as the authenticated
+        user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Users retrieved successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: Invalid request format
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized or invalid token
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Get users in the same workspace
+      tags:
+      - users
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

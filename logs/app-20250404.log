@@ -1,0 +1,93 @@
+time="2025-04-04 06:27:32" level=info msg="Connecting to database..."
+time="2025-04-04 06:27:32" level=info msg="Database connected successfully"
+time="2025-04-04 06:27:32" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:27:44" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 401 150.648µs" client_ip="::1" latency="150.648µs" method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=401
+time="2025-04-04 06:27:54" level=info msg="POST /api/v1/auth/login 200 974.744µs" client_ip="::1" latency="974.744µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-04 06:27:59" level=info msg="POST /api/v1/auth/login 200 654.6µs" client_ip="::1" latency="654.6µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-04 06:27:59" level=info msg="POST /api/v1/auth/login 200 643.171µs" client_ip="::1" latency="643.171µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-04 06:28:00" level=info msg="POST /api/v1/auth/login 200 804.389µs" client_ip="::1" latency="804.389µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-04 06:30:30" level=info msg="Connecting to database..."
+time="2025-04-04 06:30:30" level=info msg="Database connected successfully"
+time="2025-04-04 06:30:30" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:30:33" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 10.278691ms" client_ip="::1" latency=10.278691ms method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 06:31:06" level=info msg="Connecting to database..."
+time="2025-04-04 06:31:06" level=info msg="Database connected successfully"
+time="2025-04-04 06:31:06" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:31:07" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 1.135272ms" client_ip="::1" latency=1.135272ms method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 06:32:57" level=info msg="Connecting to database..."
+time="2025-04-04 06:32:57" level=info msg="Database connected successfully"
+time="2025-04-04 06:32:57" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:32:59" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 1.03693ms" client_ip="::1" latency=1.03693ms method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 06:37:00" level=info msg="Connecting to database..."
+time="2025-04-04 06:37:00" level=info msg="Database connected successfully"
+time="2025-04-04 06:37:00" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:37:06" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 2.717509598s" client_ip="::1" latency=2.717509598s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 06:37:52" level=info msg="Connecting to database..."
+time="2025-04-04 06:37:52" level=info msg="Database connected successfully"
+time="2025-04-04 06:37:52" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:43:19" level=info msg="Connecting to database..."
+time="2025-04-04 06:43:19" level=info msg="Database connected successfully"
+time="2025-04-04 06:43:19" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:46:53" level=info msg="Connecting to database..."
+time="2025-04-04 06:46:53" level=info msg="Database connected successfully"
+time="2025-04-04 06:46:53" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:48:03" level=info msg="Connecting to database..."
+time="2025-04-04 06:48:03" level=info msg="Database connected successfully"
+time="2025-04-04 06:48:03" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:50:28" level=info msg="Connecting to database..."
+time="2025-04-04 06:50:28" level=info msg="Database connected successfully"
+time="2025-04-04 06:50:28" level=info msg="Server starting on port 8088"
+time="2025-04-04 06:53:11" level=info msg="Connecting to database..."
+time="2025-04-04 06:53:11" level=info msg="Database connected successfully"
+time="2025-04-04 06:53:11" level=info msg="Server starting on port 8088"
+time="2025-04-04 07:00:44" level=info msg="Connecting to database..."
+time="2025-04-04 07:00:44" level=info msg="Database connected successfully"
+time="2025-04-04 07:00:44" level=info msg="Server starting on port 8088"
+time="2025-04-04 07:01:52" level=info msg="Connecting to database..."
+time="2025-04-04 07:01:52" level=info msg="Database connected successfully"
+time="2025-04-04 07:01:52" level=info msg="Server starting on port 8088"
+time="2025-04-04 07:02:44" level=info msg="Connecting to database..."
+time="2025-04-04 07:02:44" level=info msg="Database connected successfully"
+time="2025-04-04 07:02:44" level=info msg="Server starting on port 8088"
+time="2025-04-04 07:04:18" level=info msg="Connecting to database..."
+time="2025-04-04 07:04:18" level=info msg="Database connected successfully"
+time="2025-04-04 07:04:18" level=info msg="Server starting on port 8088"
+time="2025-04-04 07:05:06" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 42.306990919s" client_ip="::1" latency=42.306990919s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 07:10:00" level=info msg="Connecting to database..."
+time="2025-04-04 07:10:00" level=info msg="Database connected successfully"
+time="2025-04-04 07:10:01" level=info msg="Server starting on port 8088"
+time="2025-04-04 15:42:38" level=info msg="Connecting to database..."
+time="2025-04-04 15:42:38" level=info msg="Database connected successfully"
+time="2025-04-04 15:42:38" level=info msg="Server starting on port 8088"
+time="2025-04-04 15:42:42" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 401 180.694µs" client_ip="::1" latency="180.694µs" method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=401
+time="2025-04-04 15:42:46" level=info msg="POST /api/v1/auth/login 200 970.834µs" client_ip="::1" latency="970.834µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-04 15:43:23" level=warning msg="POST /api/v1/auth/refresh 401 20.544µs" client_ip="::1" latency="20.544µs" method=POST path=/api/v1/auth/refresh status=401
+time="2025-04-04 15:54:32" level=info msg="Connecting to database..."
+time="2025-04-04 15:54:32" level=info msg="Database connected successfully"
+time="2025-04-04 15:54:32" level=info msg="Server starting on port 8088"
+time="2025-04-04 15:54:40" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 5.183016345s" client_ip="::1" latency=5.183016345s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 15:56:10" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 1m1.063246004s" client_ip="::1" latency=1m1.063246004s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 15:57:15" level=info msg="Connecting to database..."
+time="2025-04-04 15:57:15" level=info msg="Database connected successfully"
+time="2025-04-04 15:57:15" level=info msg="Server starting on port 8088"
+time="2025-04-04 15:58:20" level=info msg="Connecting to database..."
+time="2025-04-04 15:58:20" level=info msg="Database connected successfully"
+time="2025-04-04 15:58:20" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:00:20" level=info msg="Connecting to database..."
+time="2025-04-04 16:00:20" level=info msg="Database connected successfully"
+time="2025-04-04 16:00:20" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:15:11" level=info msg="Connecting to database..."
+time="2025-04-04 16:15:11" level=info msg="Database connected successfully"
+time="2025-04-04 16:15:11" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:15:15" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 2.215480625s" client_ip="::1" latency=2.215480625s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 16:19:47" level=info msg="Connecting to database..."
+time="2025-04-04 16:19:47" level=info msg="Database connected successfully"
+time="2025-04-04 16:19:47" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:21:13" level=info msg="Connecting to database..."
+time="2025-04-04 16:21:13" level=info msg="Database connected successfully"
+time="2025-04-04 16:21:13" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:21:48" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 33.196246761s" client_ip="::1" latency=33.196246761s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400
+time="2025-04-04 16:23:44" level=info msg="Connecting to database..."
+time="2025-04-04 16:23:44" level=info msg="Database connected successfully"
+time="2025-04-04 16:23:44" level=info msg="Server starting on port 8088"
+time="2025-04-04 16:24:31" level=warning msg="GET /api/v1/tasks/assigned?page=1&limit=10 400 15.245876049s" client_ip="::1" latency=15.245876049s method=GET path="/api/v1/tasks/assigned?page=1&limit=10" status=400

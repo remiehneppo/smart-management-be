@@ -1,0 +1,8 @@
+# be-task-management configuration
+port: 8082
+# Logger
+logger:
+  log_level: "info"
+  enable_console: true
+  enable_file: true
+  file_path: "logs"

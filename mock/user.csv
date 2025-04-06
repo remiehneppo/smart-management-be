@@ -1,0 +1,7 @@
+,username,password,full_name,management_level,workspace_role,workspace,created_at,updated_at
+,lnngochoang,123456,Lê Nguyễn Ngọc Hoàng,3,dhead,DepartmentTechnical,1714532800,1714532800
+,levanC,123456,Lê Văn C,2,assistant,DepartmentTechnical,1714532800,1714532800
+,phamthiD,123456,Phạm Thị D,2,staff,DepartmentTechnical,1714532800,1714532800
+,hoangvanE,123456,Hoàng Văn E,2,staff,DepartmentTechnical,1714532800,1714532800
+,dangthiF,123456,Đặng Thị F,2,staff,DepartmentTechnical,1714532800,1714532800
+,tranvanG,123456,Trần Văn G,2,staff,DepartmentTechnical,1714532800,1714532800
