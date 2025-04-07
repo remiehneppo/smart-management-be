@@ -9,28 +9,32 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/remiehneppo/be-task-management/types"
 )
 
-
 type DocumentServiceConfig struct {
 	MaxChunkSize int // Maximum size for text chunks
 	OverlapSize  int // Size of overlap between chunks// Total number of pages in the document
+	BatchSize    int // Number of pages to process in a batch
 }
 
 // PDFService handles PDF processing operations
 type PDFService struct {
 	maxChunkSize int // Maximum size of each text chunk
 	overlapSize  int // Size of overlap between chunks
+	batchSize    int // Number of pages to process in a batch
 }
 
 var DefaultDocumentServiceConfig = DocumentServiceConfig{
 	MaxChunkSize: 1024,
 	OverlapSize:  128,
+	BatchSize:    3,
 }
 
 // PDFChunk represents a processed chunk of PDF text with metadata
@@ -41,7 +45,16 @@ func NewPDFService(config DocumentServiceConfig) *PDFService {
 	return &PDFService{
 		maxChunkSize: config.MaxChunkSize,
 		overlapSize:  config.OverlapSize,
+		batchSize:    config.BatchSize,
 	}
+}
+
+func (s *PDFService) GetTotalPages(filePath string) (int, error) {
+	totalPages, err := getNumPages(filePath)
+	if err != nil {
+		return 0, fmt.Errorf("failed to get total pages: %w", err)
+	}
+	return totalPages, nil
 }
 
 // ProcessPDF reads and chunks a PDF file
@@ -51,18 +64,18 @@ func NewPDFService(config DocumentServiceConfig) *PDFService {
 //
 // Returns:
 //   - error: Error if processing fails
-func (s *PDFService) ProcessPDF(filePath string, req types.UploadRequest, c chan<- types.DocumentChunk) error {
-	defer close(c)
+func (s *PDFService) ProcessPDF(filePath string, req types.UploadRequest) ([]*types.DocumentChunk, error) {
+	chunks := make([]*types.DocumentChunk, 0)
 	// Get total pages
 	totalPages, err := getNumPages(filePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Extract all text from the PDF
-	texts, err := s.extractAllText(filePath, totalPages)
+	texts, err := s.extractAllText(filePath)
 	if err != nil {
-		return fmt.Errorf("failed to extract text from PDF: %w", err)
+		return nil, types.ErrFailedExtractTextFromPDF
 	}
 	lastText := ""
 	// Process each page
@@ -84,24 +97,20 @@ func (s *PDFService) ProcessPDF(filePath string, req types.UploadRequest, c chan
 		// 	Tags:       req.Tags,
 		// }
 		// Create chunks for this page
-		pageChunks, newLastText := s.createChunks(text, pageNum, pageNum)
+		pageChunks, newLastText := s.createChunks(text, len(chunks), pageNum)
 		if len(pageChunks) == 0 {
 			lastText = newLastText
 			continue
 		}
 		if len(newLastText) > 0 {
 			lastText = newLastText
-			for i := 0; i < len(pageChunks)-1; i++ {
-				c <- pageChunks[i]
-			}
+			chunks = append(chunks, pageChunks[:len(pageChunks)-1]...)
 		} else {
-			for _, chunk := range pageChunks {
-				c <- chunk
-			}
+			chunks = append(chunks, pageChunks...)
 		}
 
 	}
-	return nil
+	return chunks, nil
 }
 
 // getFileNameWithoutExt extracts filename without extension from a file path
@@ -116,65 +125,226 @@ func GetFileNameWithoutExt(filepath string) string {
 
 	return base
 }
-func (s *PDFService) extractAllText(filePath string, totalPages int) ([]string, error) {
-	wg := sync.WaitGroup{}
+
+func (s *PDFService) CreateTempDir(pdfPath string) (string, error) {
+	if _, err := os.Stat("temp"); os.IsNotExist(err) {
+		os.Mkdir("temp", os.ModePerm)
+	}
+	tempFolder := filepath.Join("temp", GetFileNameWithoutExt(pdfPath))
+	if _, err := os.Stat(tempFolder); err == nil {
+		os.RemoveAll(tempFolder)
+	}
+	err := os.Mkdir(tempFolder, os.ModePerm)
+	if err != nil {
+		return "", fmt.Errorf("failed to create temp directory: %w", err)
+	}
+
+	return tempFolder, nil
+}
+
+// ConvertPDFToImages converts all pages of a PDF file to images
+// Parameters:
+//   - pdfPath: Path to the PDF file
+//   - outputDir: Directory to save images (optional, defaults to temp/<filename>)
+//
+// Returns:
+//   - []string: Paths to generated image files
+//   - error: Error if conversion fails
+func (s *PDFService) ConvertPDFToImages(pdfPath string, outputDir string) ([]string, error) {
+
+	// Create temp directory if outputDir not specified
+	if outputDir == "" {
+		if _, err := os.Stat("temp"); os.IsNotExist(err) {
+			os.Mkdir("temp", os.ModePerm)
+		}
+		outputDir = filepath.Join("temp", GetFileNameWithoutExt(pdfPath))
+		if _, err := os.Stat(outputDir); err == nil {
+			os.RemoveAll(outputDir)
+		}
+		if err := os.Mkdir(outputDir, os.ModePerm); err != nil {
+			return nil, fmt.Errorf("failed to create output directory: %w", err)
+		}
+	} else {
+		// Make sure output directory exists
+		if _, err := os.Stat(outputDir); os.IsNotExist(err) {
+			if err := os.MkdirAll(outputDir, os.ModePerm); err != nil {
+				return nil, fmt.Errorf("failed to create output directory: %w", err)
+			}
+		}
+	}
+
+	// Convert PDF to images using pdftoppm
+	// -png: output PNG images
+	// -r 300: set resolution to 300 DPI
+	// -thread: use multithreading
+	convertCmd := exec.Command("pdftoppm",
+		"-png",
+		"-r", "300",
+		// "-thread",
+		"-hide-annotations",
+		pdfPath,
+		filepath.Join(outputDir, "page"))
+
+	var stderr bytes.Buffer
+	convertCmd.Stderr = &stderr
+
+	if err := convertCmd.Run(); err != nil {
+		return nil, fmt.Errorf("error converting PDF to images: %w, stderr: %s", err, stderr.String())
+	}
+
+	// Find all generated images
+	pattern := filepath.Join(outputDir, "page-*.png")
+	imagePaths, err := filepath.Glob(pattern)
+	if err != nil || len(imagePaths) == 0 {
+		return nil, fmt.Errorf("failed to find generated images: %w", err)
+	}
+
+	// Sort image paths to ensure correct order
+	sort.Strings(imagePaths)
+
+	for i, imagePath := range imagePaths {
+		processedImage := filepath.Join(outputDir, "processed_"+strconv.Itoa(i+1)+".png")
+
+		// Tiền xử lý ảnh với ImageMagick để cải thiện chất lượng OCR
+		// Các bước: grayscale -> tăng độ tương phản -> khử nhiễu -> binary threshold
+		preprocessCmd := exec.Command("convert", imagePath,
+			"-density", "300", // Đặt mật độ dpi
+			"-colorspace", "gray", // Chuyển sang thang xám
+			"-brightness-contrast", "0x30", // Tăng độ tương phản
+			"-normalize",          // Cân bằng histogram
+			"-despeckle",          // Khử điểm nhiễu
+			"-filter", "Gaussian", // Lọc Gaussian
+			"-define", "filter:sigma=1.5", // Thông số cho lọc
+			"-threshold", "50%", // Phân loại đen trắng
+			"-sharpen", "0x1.0", // Làm sắc nét
+			processedImage)
+
+		if err := preprocessCmd.Run(); err != nil {
+			log.Printf("Warning: image preprocessing failed: %v, using original image", err)
+			processedImage = imagePath
+		}
+		// Thay thế đường dẫn ảnh gốc bằng đường dẫn ảnh đã xử lý
+		imagePaths[i] = processedImage
+	}
+
+	return imagePaths, nil
+}
+
+func (s *PDFService) extractAllText(filePath string) ([]string, error) {
+	totalPages, err := getNumPages(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get total pages: %w", err)
+	}
+	tempDir, err := s.CreateTempDir(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create temp directory: %w", err)
+	}
+
+	// Chuyển đổi PDF thành ảnh - giữ nguyên phần này
+	imagePaths, err := s.ConvertPDFToImages(filePath, tempDir)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert PDF to images: %w", err)
+	}
+
+	// Khởi tạo mảng kết quả
+	results := make([]string, totalPages)
+
+	// Xử lý theo batch thay vì tất cả các trang cùng lúc
+	for batchStart := 0; batchStart < len(imagePaths); batchStart += s.batchSize {
+		// Xác định kết thúc của batch hiện tại
+		batchEnd := batchStart + s.batchSize
+		if batchEnd > len(imagePaths) {
+			batchEnd = len(imagePaths)
+		}
+
+		log.Printf("Processing batch %d-%d of %d pages", batchStart+1, batchEnd, len(imagePaths))
+
+		// Xử lý một batch trang
+		err := s.processPageBatch(imagePaths[batchStart:batchEnd], batchStart, results)
+		if err != nil {
+			return nil, fmt.Errorf("error processing batch %d-%d: %w", batchStart+1, batchEnd, err)
+		}
+	}
+
+	return results, nil
+}
+
+// Hàm mới để xử lý một batch trang
+func (s *PDFService) processPageBatch(imagePaths []string, startIndex int, results []string) error {
+	// Tạo một channel để lưu dữ liệu văn bản từ mỗi trang
 	type PageText struct {
 		PageNum int
 		Text    string
 	}
-	c := make(chan PageText, totalPages)
-	defer close(c)
-	// Don't close the channel at the start as goroutines need to write to it
-	for pageNum := 1; pageNum <= totalPages; pageNum++ {
-		go func(pageNum int) {
+	textChan := make(chan PageText, len(imagePaths))
+
+	// WaitGroup để đảm bảo tất cả các công việc trong batch hoàn thành
+	var wg sync.WaitGroup
+
+	// Khởi chạy các worker để xử lý từng trang trong batch
+	for i, imgPath := range imagePaths {
+		pageNum := startIndex + i
+		wg.Add(1)
+		go func(imgPath string, pageNum int) {
 			defer wg.Done()
-			wg.Add(1)
-			// Extract text from the current page
-			text, err := s.extractText(filePath, pageNum)
+
+			// Cho phép CPU nghỉ ngơi một chút giữa các trang
+			if pageNum > startIndex {
+				time.Sleep(100 * time.Millisecond)
+			}
+
+			// Trích xuất văn bản từ trang hiện tại
+			text, err := s.ExtractText(imgPath)
 			if err != nil {
-				log.Printf("Warning: failed to extract text from page %d: %v", pageNum, err)
+				log.Printf("Warning: failed to extract text from page %d: %v", pageNum+1, err)
 				return
 			}
-			c <- PageText{
+
+			// Gửi kết quả vào channel
+			textChan <- PageText{
 				PageNum: pageNum,
 				Text:    text,
 			}
-		}(pageNum)
+		}(imgPath, pageNum)
 	}
-	// Wait for all goroutines to finish
-	wg.Wait()
-	// Collect results
-	results := make([]string, totalPages)
-	for pageText := range c {
-		if pageText.PageNum > 0 && pageText.PageNum <= totalPages {
-			results[pageText.PageNum-1] = pageText.Text
+
+	// Goroutine để đóng channel kết quả khi tất cả các worker hoàn thành
+	go func() {
+		wg.Wait()
+		close(textChan)
+	}()
+
+	// Thu thập kết quả của batch hiện tại
+	for pageText := range textChan {
+		if pageText.PageNum >= 0 && pageText.PageNum < len(results) {
+			results[pageText.PageNum] = pageText.Text
 		}
 	}
-	return results, nil
+
+	return nil
 }
 
 // extractText attempts to extract text from a specific page using multiple methods
-func (s *PDFService) extractText(filePath string, pageNumber int) (string, error) {
-	text, err := s.extractTextWithPdftotext(filePath, pageNumber)
-	if err != nil || text == "" {
-		text, err = s.extractTextWithTesseract(filePath, pageNumber)
-		if err != nil {
-			return "", fmt.Errorf("failed to extract text: %w", err)
-		}
+func (s *PDFService) ExtractText(imgPath string) (string, error) {
+
+	text, err := s.extractTextWithTesseract(imgPath)
+	if err != nil {
+		return "", fmt.Errorf("failed to extract text: %w", err)
 	}
+	// }
 	return text, nil
 }
 
 // createChunks splits text into overlapping chunks with proper sentence boundaries
-func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]types.DocumentChunk, string) {
-	var chunks []types.DocumentChunk
+func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]*types.DocumentChunk, string) {
+	var chunks []*types.DocumentChunk
 	textLen := len(text)
 	lastText := ""
 
 	// Return early if text fits in one chunk
 	if textLen <= s.maxChunkSize {
 		lastText = text
-		return []types.DocumentChunk{
+		return []*types.DocumentChunk{
 			{
 				Content: text,
 				Page:    pageNum,
@@ -199,7 +369,7 @@ func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]types.D
 			// Handle last chunk
 			chunk := strings.TrimSpace(text[currentPos:])
 			if chunk != "" {
-				chunks = append(chunks, types.DocumentChunk{
+				chunks = append(chunks, &types.DocumentChunk{
 					Content: chunk,
 					Page:    pageNum,
 					Chunk:   chunkNum,
@@ -239,7 +409,7 @@ func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]types.D
 
 		chunk := strings.TrimSpace(text[currentPos:sentenceEnd])
 		if chunk != "" {
-			chunks = append(chunks, types.DocumentChunk{
+			chunks = append(chunks, &types.DocumentChunk{
 				Content: chunk,
 				Page:    pageNum,
 				Chunk:   chunkNum,
@@ -266,7 +436,7 @@ func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]types.D
 					// Add the remaining text as final chunk
 					finalChunk := strings.TrimSpace(text[currentPos:])
 					if finalChunk != "" {
-						chunks = append(chunks, types.DocumentChunk{
+						chunks = append(chunks, &types.DocumentChunk{
 							Content: finalChunk,
 							Page:    pageNum,
 							Chunk:   chunkNum + 1,
@@ -287,34 +457,6 @@ func (s *PDFService) createChunks(text string, chunkNum, pageNum int) ([]types.D
 	return chunks, lastText
 }
 
-// extractTextWithPdftotext extracts text using pdftotext utility
-// Parameters:
-//   - filepath: Path to the PDF file
-//   - pageNumber: Page number to extract text from
-//
-// Returns:
-//   - string: Extracted text
-//   - error: Error if extraction fails
-func (s *PDFService) extractTextWithPdftotext(filepath string, pageNumber int) (string, error) {
-	log.Println("Try extracting with pdftotext")
-	pdftotextCmd := exec.Command("pdftotext", "-f", strconv.Itoa(pageNumber),
-		"-l", strconv.Itoa(pageNumber),
-		"-enc", "UTF-8", "-nopgbrk",
-		filepath, "-")
-	var txtOut bytes.Buffer
-	pdftotextCmd.Stdout = &txtOut
-
-	if err := pdftotextCmd.Run(); err != nil {
-		log.Printf("Error executing pdftotext command for page %d: %v", pageNumber, err)
-	}
-	pageText := txtOut.String()
-	if trimmed := strings.TrimSpace(pageText); len(trimmed) > 0 {
-		return trimmed, nil
-	} else {
-		return "", fmt.Errorf("got nothing at page %d", pageNumber)
-	}
-}
-
 // extractTextWithTesseract extracts text using OCR when pdftotext fails
 // Parameters:
 //   - pdfPath: Path to the PDF file
@@ -323,56 +465,12 @@ func (s *PDFService) extractTextWithPdftotext(filepath string, pageNumber int) (
 // Returns:
 //   - string: Extracted text
 //   - error: Error if extraction fails
-func (s *PDFService) extractTextWithTesseract(pdfPath string, pageNumber int) (string, error) {
-	log.Println("Try extracting with tesseract")
-	//check if temp directory exists
-	if _, err := os.Stat("temp"); os.IsNotExist(err) {
-		os.Mkdir("temp", os.ModePerm)
-	}
-	tempFolder := filepath.Join("temp", GetFileNameWithoutExt(pdfPath))
-	if _, err := os.Stat(tempFolder); err == nil {
-		os.RemoveAll(tempFolder)
-	}
-	err := os.Mkdir(tempFolder, os.ModePerm)
-	if err != nil {
-		return "", fmt.Errorf("failed to create temp directory: %w", err)
-	}
-	defer os.RemoveAll(tempFolder)
-
-	convertCmd := exec.Command("pdftoppm", "-f", strconv.Itoa(pageNumber), "-l", strconv.Itoa(pageNumber), "-png", pdfPath, filepath.Join(tempFolder, "page"))
-	if err := convertCmd.Run(); err != nil {
-		log.Fatalf("Error converting page %d to image: %v", pageNumber, err)
-	}
-	pattern := filepath.Join(tempFolder, "page-*.png")
-	file, err := filepath.Glob(pattern)
-	if err != nil || len(file) == 0 {
-		return "", fmt.Errorf("failed to read image files: %w", err)
-	}
-	imageFile := file[0]
-	processedImage := filepath.Join(tempFolder, "processed.png")
-
-	// Tiền xử lý ảnh với ImageMagick để cải thiện chất lượng OCR
-	// Các bước: grayscale -> tăng độ tương phản -> khử nhiễu -> binary threshold
-	preprocessCmd := exec.Command("convert", imageFile,
-		"-density", "300", // Đặt mật độ dpi
-		"-colorspace", "gray", // Chuyển sang thang xám
-		"-brightness-contrast", "0x30", // Tăng độ tương phản
-		"-normalize",          // Cân bằng histogram
-		"-despeckle",          // Khử điểm nhiễu
-		"-filter", "Gaussian", // Lọc Gaussian
-		"-define", "filter:sigma=1.5", // Thông số cho lọc
-		"-threshold", "50%", // Phân loại đen trắng
-		"-sharpen", "0x1.0", // Làm sắc nét
-		processedImage)
-
-	if err := preprocessCmd.Run(); err != nil {
-		log.Printf("Warning: image preprocessing failed: %v, using original image", err)
-		processedImage = imageFile // Fallback to original if processing fails
-	}
+func (s *PDFService) extractTextWithTesseract(imgPath string) (string, error) {
+	log.Println("Try extracting with tesseract, page:", imgPath)
 
 	// Chạy OCR với Tesseract trên ảnh đã xử lý
 	ocrCmd := exec.Command("tesseract",
-		processedImage,
+		imgPath,
 		"stdout",
 		"-l", "vie+rus+eng", // Các ngôn ngữ
 		"--oem", "3", // LSTM OCR Engine
@@ -391,7 +489,7 @@ func (s *PDFService) extractTextWithTesseract(pdfPath string, pageNumber int) (s
 	if trimmed := strings.TrimSpace(ocrText); len(trimmed) > 0 {
 		return trimmed, nil
 	} else {
-		return "", fmt.Errorf("got nothing at page %d", pageNumber)
+		return "", nil
 	}
 }
 

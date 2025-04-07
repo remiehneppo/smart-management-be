@@ -25,30 +25,30 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("start called")
+		cfg, err := config.LoadConfig(".")
+		if err != nil {
+			fmt.Println("Error loading config:", err)
+			return
+		}
+		jsonCfg, err := json.MarshalIndent(cfg, "", "  ")
+		if err != nil {
+			fmt.Println("Error marshalling config to JSON:", err)
+			return
+		}
+		fmt.Println("Loaded config:", string(jsonCfg))
+		if cfg.Environment == "production" {
+			gin.SetMode(gin.ReleaseMode)
+		} else {
+			gin.SetMode(gin.DebugMode)
+		}
+		server := app.NewApp(cfg)
+		server.RegisterHandler()
+		server.Start()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(startCmd)
-	cfg, err := config.LoadConfig(".")
-	if err != nil {
-		fmt.Println("Error loading config:", err)
-		return
-	}
-	jsonCfg, err := json.MarshalIndent(cfg, "", "  ")
-	if err != nil {
-		fmt.Println("Error marshalling config to JSON:", err)
-		return
-	}
-	fmt.Println("Loaded config:", string(jsonCfg))
-	if cfg.Environment == "production" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
-		gin.SetMode(gin.DebugMode)
-	}
-	server := app.NewApp(cfg)
-	server.RegisterHandler()
-	server.Start()
 
 	// Here you will define your flags and configuration settings.
 

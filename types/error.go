@@ -21,3 +21,7 @@ var (
 	ErrReportNotCreator              = errors.New("report not creator")
 	ErrUserNotFound                  = errors.New("user not found")
 )
+
+var (
+	ErrFailedExtractTextFromPDF = errors.New("failed to extract text from PDF")
+)
