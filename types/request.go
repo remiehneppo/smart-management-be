@@ -60,3 +60,9 @@ type FeedbackRequest struct {
 	ReportID string `json:"report_id" binding:"required"`
 	Feedback string `json:"feedback" binding:"required"`
 }
+
+type UploadRequest struct {
+	Title  string   `json:"title" binding:"required"`
+	Source string   `json:"source"`
+	Tags   []string `json:"tags" binding:"required"`
+}
