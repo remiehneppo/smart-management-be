@@ -6,3 +6,8 @@ logger:
   enable_console: true
   enable_file: true
   file_path: "logs"
+openai:
+  system_prompt: "You are a helpful assistant"
+  base_url: "https://api.openai.com/v1"
+  model: "gpt-4.1-mini"
+  allow_tool: true

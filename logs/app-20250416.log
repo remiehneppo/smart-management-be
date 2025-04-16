@@ -1,0 +1,23 @@
+time="2025-04-16 15:00:36" level=info msg="Connecting to database..."
+time="2025-04-16 15:06:41" level=info msg="Connecting to database..."
+time="2025-04-16 15:07:01" level=info msg="Connecting to database..."
+time="2025-04-16 15:07:01" level=info msg="Database connected successfully"
+time="2025-04-16 15:07:01" level=info msg="Server starting on port 8088"
+time="2025-04-16 15:07:20" level=warning msg="GET /swagger-ui 404 298ns" client_ip="::1" latency=298ns method=GET path=/swagger-ui status=404
+time="2025-04-16 15:07:20" level=warning msg="GET /favicon.ico 404 199ns" client_ip="::1" latency=199ns method=GET path=/favicon.ico status=404
+time="2025-04-16 15:07:25" level=warning msg="GET /swagger-ui.html 404 309ns" client_ip="::1" latency=309ns method=GET path=/swagger-ui.html status=404
+time="2025-04-16 15:07:31" level=info msg="GET /swagger/index.html 200 287.71µs" client_ip="::1" latency="287.71µs" method=GET path=/swagger/index.html status=200
+time="2025-04-16 15:07:31" level=info msg="GET /swagger/swagger-ui.css 200 262.657µs" client_ip="::1" latency="262.657µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-16 15:07:31" level=info msg="GET /swagger/swagger-ui-bundle.js 200 811.334µs" client_ip="::1" latency="811.334µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-16 15:07:31" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 293.178µs" client_ip="::1" latency="293.178µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-16 15:07:32" level=info msg="GET /swagger/favicon-32x32.png 200 37.082µs" client_ip="::1" latency="37.082µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-16 15:07:32" level=info msg="GET /swagger/doc.json 200 300.037µs" client_ip="::1" latency="300.037µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-16 15:47:13" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 15:47:13" level=info msg="Disconnecting from database..."
+time="2025-04-16 15:47:13" level=info msg="Graceful shutdown completed"
+time="2025-04-16 16:14:24" level=info msg="Connecting to database..."
+time="2025-04-16 16:14:24" level=info msg="Database connected successfully"
+time="2025-04-16 16:14:24" level=info msg="Server starting on port 8088"
+time="2025-04-16 16:15:03" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 16:15:03" level=info msg="Disconnecting from database..."
+time="2025-04-16 16:15:03" level=info msg="Graceful shutdown completed"
