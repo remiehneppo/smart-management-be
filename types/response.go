@@ -46,3 +46,7 @@ type ReportResponse struct {
 	Report   string `json:"report" bson:"report"`
 	Feedback string `json:"feedback" bson:"feedback"`
 }
+
+type ChatResponse struct {
+	Content string `json:"content"`
+}

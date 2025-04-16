@@ -135,10 +135,13 @@ func (a *App) RegisterHandler() {
 		a.config.JWT.Expire,
 	)
 
+	aiService := service.NewOpenAIService(a.config.OpenAI)
+	aiAssistantService := service.NewAIAssistantService(aiService)
 	loginService := service.NewLoginService(jwtService, userRepo)
 	userService := service.NewUserService(userRepo)
 	taskService := service.NewTaskService(taskRepo, reportRepo, userRepo)
 
+	aiAssistantHandler := handler.NewAIAssistantHandler(aiAssistantService)
 	loginHandler := handler.NewLoginHandler(loginService, a.logger)
 	userHandler := handler.NewUserHandler(userService, a.logger)
 	taskHandler := handler.NewTaskHandler(taskService, a.logger)
@@ -176,4 +179,9 @@ func (a *App) RegisterHandler() {
 	taskGroup.POST("/report/delete", taskHandler.DeleteReport)
 	taskGroup.POST("/report/update", taskHandler.UpdateReportTask)
 	taskGroup.POST("/report/feedback", taskHandler.FeedbackReport)
+
+	aiAssistantGroup := a.api.Group("/api/v1/assistant")
+	aiAssistantGroup.Use(authMiddleware.AuthBearerMiddleware())
+	aiAssistantGroup.POST("/chat", aiAssistantHandler.ChatWithAssistant)
+	aiAssistantGroup.POST("/chat-stateless", aiAssistantHandler.ChatWithAssistantStateless)
 }

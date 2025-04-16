@@ -60,3 +60,18 @@ type FeedbackRequest struct {
 	ReportID string `json:"report_id" binding:"required"`
 	Feedback string `json:"feedback" binding:"required"`
 }
+
+type ChatRequest struct {
+	ChatId string `json:"chat_id" binding:"required"`
+	Prompt string `json:"prompt" binding:"required"`
+}
+
+type ChatStatelessRequest struct {
+	Messages []Message `json:"messages" binding:"required"`
+}
+
+type PaginateMessagesRequest struct {
+	ChatId string `json:"chat_id" binding:"required"`
+	Page   int64  `json:"page" binding:"required"`
+	Limit  int64  `json:"limit" binding:"required"`
+}

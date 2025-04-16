@@ -21,3 +21,50 @@ time="2025-04-16 16:14:24" level=info msg="Server starting on port 8088"
 time="2025-04-16 16:15:03" level=info msg="Starting graceful shutdown..."
 time="2025-04-16 16:15:03" level=info msg="Disconnecting from database..."
 time="2025-04-16 16:15:03" level=info msg="Graceful shutdown completed"
+time="2025-04-16 16:35:38" level=info msg="Connecting to database..."
+time="2025-04-16 16:35:38" level=info msg="Database connected successfully"
+time="2025-04-16 16:35:38" level=info msg="Server starting on port 8088"
+time="2025-04-16 16:35:57" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 16:35:57" level=info msg="Disconnecting from database..."
+time="2025-04-16 16:35:57" level=info msg="Graceful shutdown completed"
+time="2025-04-16 18:40:25" level=info msg="Connecting to database..."
+time="2025-04-16 18:40:25" level=info msg="Database connected successfully"
+time="2025-04-16 18:40:25" level=info msg="Server starting on port 8088"
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/index.html 200 260.964µs" client_ip="::1" latency="260.964µs" method=GET path=/swagger/index.html status=200
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/swagger-ui.css 200 171.543µs" client_ip="::1" latency="171.543µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/swagger-ui-bundle.js 200 533.531µs" client_ip="::1" latency="533.531µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 384.394µs" client_ip="::1" latency="384.394µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/favicon-32x32.png 200 28.607µs" client_ip="::1" latency="28.607µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-16 18:40:38" level=info msg="GET /swagger/doc.json 200 359.388µs" client_ip="::1" latency="359.388µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-16 18:40:52" level=info msg="POST /api/v1/auth/login 200 979.499µs" client_ip="::1" latency="979.499µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-16 18:41:34" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 18:41:34" level=info msg="Disconnecting from database..."
+time="2025-04-16 18:41:34" level=info msg="Graceful shutdown completed"
+time="2025-04-16 18:44:19" level=info msg="Connecting to database..."
+time="2025-04-16 18:44:19" level=info msg="Database connected successfully"
+time="2025-04-16 18:44:19" level=info msg="Server starting on port 8088"
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/index.html 200 244.621µs" client_ip="::1" latency="244.621µs" method=GET path=/swagger/index.html status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/swagger-ui.css 200 261.242µs" client_ip="::1" latency="261.242µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/swagger-ui-bundle.js 200 638.293µs" client_ip="::1" latency="638.293µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 510.976µs" client_ip="::1" latency="510.976µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/favicon-32x32.png 200 44.002µs" client_ip="::1" latency="44.002µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/doc.json 200 488.07µs" client_ip="::1" latency="488.07µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-16 18:44:27" level=info msg="GET /swagger/favicon-32x32.png 304 33.987µs" client_ip="::1" latency="33.987µs" method=GET path=/swagger/favicon-32x32.png status=304
+time="2025-04-16 18:44:43" level=info msg="POST /api/v1/auth/login 200 959.373µs" client_ip="::1" latency="959.373µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-16 18:45:11" level=warning msg="POST /api/v1/assistant/chat-stateless 400 74.589µs" client_ip="::1" latency="74.589µs" method=POST path=/api/v1/assistant/chat-stateless status=400
+time="2025-04-16 18:45:45" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 18:45:45" level=info msg="Disconnecting from database..."
+time="2025-04-16 18:45:45" level=info msg="Graceful shutdown completed"
+time="2025-04-16 18:45:49" level=info msg="Connecting to database..."
+time="2025-04-16 18:45:49" level=info msg="Database connected successfully"
+time="2025-04-16 18:45:49" level=info msg="Server starting on port 8088"
+time="2025-04-16 18:45:59" level=info msg="GET /swagger/index.html 200 208.876µs" client_ip="::1" latency="208.876µs" method=GET path=/swagger/index.html status=200
+time="2025-04-16 18:45:59" level=info msg="GET /swagger/swagger-ui.css 200 264.137µs" client_ip="::1" latency="264.137µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-16 18:45:59" level=info msg="GET /swagger/swagger-ui-bundle.js 200 801.638µs" client_ip="::1" latency="801.638µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-16 18:45:59" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 282.49µs" client_ip="::1" latency="282.49µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-16 18:46:00" level=info msg="GET /swagger/favicon-32x32.png 200 31.331µs" client_ip="::1" latency="31.331µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-16 18:46:00" level=info msg="GET /swagger/doc.json 200 383.582µs" client_ip="::1" latency="383.582µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-16 18:46:30" level=info msg="POST /api/v1/assistant/chat-stateless 200 1.827860687s" client_ip="::1" latency=1.827860687s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-16 18:46:40" level=info msg="Starting graceful shutdown..."
+time="2025-04-16 18:46:40" level=info msg="Disconnecting from database..."
+time="2025-04-16 18:46:40" level=info msg="Graceful shutdown completed"

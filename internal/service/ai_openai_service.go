@@ -11,19 +11,25 @@ import (
 	"github.com/sashabaranov/go-openai/jsonschema"
 )
 
-var (
-	SystemMessageInitiateMechanicalEngineer = openai.ChatCompletionMessage{
-		Role: openai.ChatMessageRoleSystem,
-		Content: `You are an AI technical assistant for the X52 factory (Nhà máy X52). Your task is to support and answer technical questions related to the operation, maintenance, repair, and optimization of equipment and production processes in the factory.  
+// var (
+// 	SystemMessageInitiateMechanicalEngineer = openai.ChatCompletionMessage{
+// 		Role: openai.ChatMessageRoleSystem,
+// 		Content: `You are an AI technical assistant for the X52 factory (Nhà máy X52). Your task is to support and answer technical questions related to the operation, maintenance, repair, and optimization of equipment and production processes in the factory.
 
-You always respond in Vietnamese with accurate, clear, and concise answers. If in-depth information is available, you can provide detailed explanations to help users understand the issue thoroughly.  
+// You always respond in Vietnamese with accurate, clear, and concise answers. If in-depth information is available, you can provide detailed explanations to help users understand the issue thoroughly.
 
-If a question falls outside your area of expertise or there is not enough data to answer, politely inform the user instead of making assumptions.  
+// If a question falls outside your area of expertise or there is not enough data to answer, politely inform the user instead of making assumptions.
 
-Always maintain a professional, polite, and helpful approach when assisting users.  
-`,
-	}
-)
+// Always maintain a professional, polite, and helpful approach when assisting users.
+// `,
+// 	}
+// )
+
+var _ AIService = (*OpenAIService)(nil)
+
+type AIService interface {
+	Chat(ctx context.Context, messages []types.Message) (*types.Message, error)
+}
 
 type OpenAIService struct {
 	systemPromt   string
@@ -51,7 +57,10 @@ func NewOpenAIService(aiCfg config.OpenaiConfig) *OpenAIService {
 func (s *OpenAIService) Chat(ctx context.Context, messages []types.Message) (*types.Message, error) {
 	// Convert our Message type to OpenAI chat messages
 	openaiMessages := make([]openai.ChatCompletionMessage, 0)
-	openaiMessages = append(openaiMessages, SystemMessageInitiateMechanicalEngineer)
+	openaiMessages = append(openaiMessages, openai.ChatCompletionMessage{
+		Role:    openai.ChatMessageRoleSystem,
+		Content: s.systemPromt,
+	})
 	for _, msg := range messages {
 		openaiMessages = append(openaiMessages, openai.ChatCompletionMessage{
 			Role:    openai.ChatMessageRoleUser,
@@ -90,7 +99,7 @@ func (s *OpenAIService) Chat(ctx context.Context, messages []types.Message) (*ty
 
 	// Convert response back to our Message type
 	return &types.Message{
-		Role:    "assistant",
+		Role:    openai.ChatMessageRoleAssistant,
 		Content: resp.Choices[0].Message.Content,
 	}, nil
 }

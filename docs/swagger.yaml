@@ -1,5 +1,19 @@
 basePath: /api/v1
 definitions:
+  types.ChatResponse:
+    properties:
+      content:
+        type: string
+    type: object
+  types.ChatStatelessRequest:
+    properties:
+      messages:
+        items:
+          $ref: '#/definitions/types.Message'
+        type: array
+    required:
+    - messages
+    type: object
   types.CreateReportRequest:
     properties:
       report:
@@ -63,6 +77,13 @@ definitions:
       access_token:
         type: string
       refresh_token:
+        type: string
+    type: object
+  types.Message:
+    properties:
+      content:
+        type: string
+      role:
         type: string
     type: object
   types.PaginatedData:
@@ -173,6 +194,47 @@ info:
   title: Task Management API
   version: "1.0"
 paths:
+  /assistant/chat-stateless:
+    post:
+      consumes:
+      - application/json
+      description: Chat with Assistant Stateless
+      parameters:
+      - description: Chat request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/types.ChatStatelessRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.ChatResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Chat with Assistant Stateless
+      tags:
+      - assistant
   /auth/login:
     post:
       consumes:

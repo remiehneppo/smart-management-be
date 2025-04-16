@@ -7,7 +7,8 @@ logger:
   enable_file: true
   file_path: "logs"
 openai:
-  system_prompt: "You are a helpful assistant"
+  system_prompt: "You are an AI technical assistant for the X52 factory (Nhà máy X52). Your task is to support and answer technical questions related to the operation, maintenance, repair, and optimization of equipment and production processes in the factory.
+                  You always respond in Vietnamese with accurate, clear, and concise answers"
   base_url: "https://api.openai.com/v1"
   model: "gpt-4.1-mini"
   allow_tool: true

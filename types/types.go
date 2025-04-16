@@ -93,6 +93,19 @@ type Report struct {
 	UpdatedAt  int64  `json:"updated_at" bson:"updated_at"`
 }
 
+type Chat struct {
+	ID     string `json:"id" bson:"_id,omitempty"`
+	UserID string `json:"user_id" bson:"user_id"`
+}
+
+type ChatMessage struct {
+	ID        string `json:"id" bson:"_id,omitempty"`
+	ChatID    string `json:"chat_id" bson:"chat_id"`
+	Role      string `json:"role" bson:"role"`
+	Content   string `json:"content" bson:"content"`
+	CreatedAt int64  `json:"created_at" bson:"created_at"`
+}
+
 type TaskFilter struct {
 	Title        string `json:"title" bson:"title"`
 	Workspace    string `json:"workspace" bson:"workspace"`
