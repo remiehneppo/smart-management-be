@@ -143,3 +143,16 @@ type UserFilter struct {
 	FullName  string `json:"full_name" bson:"full_name"`
 	Workspace string `json:"workspace" bson:"workspace"`
 }
+
+type DocumentChunk struct {
+	Content string `json:"content"`
+	Page    int    `json:"page"`
+	Chunk   int    `json:"chunk"`
+}
+
+type DocumentMetadata struct {
+	Title      string   `json:"title"`
+	Source     string   `json:"source"`
+	TotalPages int      `json:"total_pages"`
+	Tags       []string `json:"tags"`
+}

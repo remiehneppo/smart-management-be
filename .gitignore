@@ -1,2 +1,4 @@
 .env
 __debug*
+/temp
+/test_data

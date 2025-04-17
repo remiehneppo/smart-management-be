@@ -63,6 +63,12 @@ type FeedbackRequest struct {
 	Feedback string `json:"feedback" binding:"required"`
 }
 
+type UploadRequest struct {
+	Title  string   `json:"title" binding:"required"`
+	Source string   `json:"source"`
+	Tags   []string `json:"tags" binding:"required"`
+}
+
 type ChatRequest struct {
 	ChatId string `json:"chat_id" binding:"required"`
 	Prompt string `json:"prompt" binding:"required"`

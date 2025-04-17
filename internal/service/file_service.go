@@ -80,7 +80,6 @@ func (f *fileService) UploadFile(ctx context.Context, req types.UploadFileReques
 		return nil, err
 	}
 	return &types.UploadFileResponse{
-		FileID:   fileMetadata.ID,
 		FileName: req.FileName,
 		FilePath: filePath,
 	}, nil

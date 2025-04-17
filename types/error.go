@@ -26,3 +26,7 @@ var (
 	ErrUnsupportedFileType = errors.New("unsupported file type")
 	ErrFileTooLarge        = errors.New("file too large")
 )
+
+var (
+	ErrFailedExtractTextFromPDF = errors.New("failed to extract text from PDF")
+)
