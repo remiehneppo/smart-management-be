@@ -55,3 +55,12 @@ type UploadFileResponse struct {
 	FilePath string `json:"file_path"`
 	FileName string `json:"file_name"`
 }
+
+type ChunkDocumentResponse struct {
+	ID          string   `json:"id" bson:"_id,omitempty"`
+	Title       string   `json:"title" bson:"title"`
+	Content     string   `json:"content" bson:"content"`
+	PageNumber  int      `json:"page_number" bson:"page_number"`
+	ChunkNumber int      `json:"chunk_number" bson:"chunk_number"`
+	Tags        []string `json:"tags" bson:"tags"`
+}

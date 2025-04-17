@@ -1,0 +1,23 @@
+time="2025-04-17 08:58:44" level=info msg="Connecting to database..."
+time="2025-04-17 08:58:44" level=info msg="Database connected successfully"
+time="2025-04-17 08:58:44" level=info msg="Server starting on port 8088"
+time="2025-04-17 08:58:48" level=warning msg="GET / 404 293ns" client_ip="::1" latency=293ns method=GET path=/ status=404
+time="2025-04-17 08:58:48" level=warning msg="GET /favicon.ico 404 293ns" client_ip="::1" latency=293ns method=GET path=/favicon.ico status=404
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/index.html 200 580.483µs" client_ip="::1" latency="580.483µs" method=GET path=/swagger/index.html status=200
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/swagger-ui.css 200 241.827µs" client_ip="::1" latency="241.827µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 287.555µs" client_ip="::1" latency="287.555µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/swagger-ui-bundle.js 200 576.185µs" client_ip="::1" latency="576.185µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/favicon-32x32.png 200 74.844µs" client_ip="::1" latency="74.844µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-17 08:58:58" level=info msg="GET /swagger/doc.json 200 313.545µs" client_ip="::1" latency="313.545µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-17 08:59:51" level=warning msg="POST /api/v1/assistant/chat-stateless 401 55.389µs" client_ip="::1" latency="55.389µs" method=POST path=/api/v1/assistant/chat-stateless status=401
+time="2025-04-17 09:00:08" level=info msg="POST /api/v1/auth/login 200 8.982219ms" client_ip="::1" latency=8.982219ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-17 09:00:29" level=info msg="POST /api/v1/assistant/chat-stateless 200 3.524839637s" client_ip="::1" latency=3.524839637s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-17 09:11:57" level=info msg="Starting graceful shutdown..."
+time="2025-04-17 09:11:57" level=info msg="Disconnecting from database..."
+time="2025-04-17 09:11:57" level=info msg="Graceful shutdown completed"
+time="2025-04-17 10:08:34" level=info msg="Connecting to database..."
+time="2025-04-17 10:08:34" level=info msg="Database connected successfully"
+time="2025-04-17 10:08:34" level=info msg="Server starting on port 8088"
+time="2025-04-17 10:08:38" level=info msg="Starting graceful shutdown..."
+time="2025-04-17 10:08:38" level=info msg="Disconnecting from database..."
+time="2025-04-17 10:08:38" level=info msg="Graceful shutdown completed"
