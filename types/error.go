@@ -21,3 +21,8 @@ var (
 	ErrReportNotCreator              = errors.New("report not creator")
 	ErrUserNotFound                  = errors.New("user not found")
 )
+
+var (
+	ErrUnsupportedFileType = errors.New("unsupported file type")
+	ErrFileTooLarge        = errors.New("file too large")
+)

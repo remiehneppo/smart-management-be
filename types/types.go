@@ -93,6 +93,16 @@ type Report struct {
 	UpdatedAt  int64  `json:"updated_at" bson:"updated_at"`
 }
 
+type FileMetadata struct {
+	ID        string `json:"id" bson:"_id,omitempty"`
+	FileName  string `json:"file_name" bson:"file_name"`
+	FileSize  int64  `json:"file_size" bson:"file_size"`
+	FileType  string `json:"file_type" bson:"file_type"`
+	FilePath  string `json:"file_path" bson:"file_path"`
+	CreatedAt int64  `json:"created_at" bson:"created_at"`
+	UpdatedAt int64  `json:"updated_at" bson:"updated_at"`
+}
+
 type Chat struct {
 	ID     string `json:"id" bson:"_id,omitempty"`
 	UserID string `json:"user_id" bson:"user_id"`

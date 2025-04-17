@@ -1,5 +1,7 @@
 package types
 
+import "mime/multipart"
+
 type LoginRequest struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
@@ -74,4 +76,9 @@ type PaginateMessagesRequest struct {
 	ChatId string `json:"chat_id" binding:"required"`
 	Page   int64  `json:"page" binding:"required"`
 	Limit  int64  `json:"limit" binding:"required"`
+}
+
+type UploadFileRequest struct {
+	FileName   string               `json:"file_name" binding:"required"`
+	FileHeader multipart.FileHeader `json:"file" binding:"required"`
 }
