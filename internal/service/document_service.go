@@ -16,6 +16,7 @@ type DocumentService interface {
 	UploadDocument(ctx context.Context, req *types.UploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.UploadDocumentResponse, error)
 	SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error)
 	AskAI(ctx context.Context, req *types.AskAIRequest) (*types.AskAIResponse, error)
+	ViewDocument(ctx context.Context, req *types.ViewDocumentRequest) (*types.ViewDocumentResponse, error)
 }
 
 type documentService struct {
@@ -133,4 +134,15 @@ func (s *documentService) isAllowedType(ext string) bool {
 		}
 	}
 	return false
+}
+
+func (s *documentService) ViewDocument(ctx context.Context, req *types.ViewDocumentRequest) (*types.ViewDocumentResponse, error) {
+	file, err := s.fileService.GetFile(ctx, req.FilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.ViewDocumentResponse{
+		Document: file,
+	}, nil
 }

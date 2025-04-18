@@ -506,6 +506,37 @@ paths:
       summary: Upload a PDF document
       tags:
       - documents
+  /documents/view:
+    get:
+      consumes:
+      - application/json
+      description: Streams a PDF document to the client for viewing in the browser
+      parameters:
+      - description: Path to the PDF document
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/pdf
+      responses:
+        "200":
+          description: PDF document streamed successfully
+          schema:
+            type: file
+        "400":
+          description: 'Invalid request: missing document path'
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: View a PDF document
+      tags:
+      - documents
   /tasks/{id}:
     get:
       consumes:

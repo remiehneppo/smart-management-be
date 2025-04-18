@@ -206,6 +206,7 @@ func (a *App) RegisterHandler() {
 
 	authMiddleware := middleware.NewAuthMiddleware(jwtService)
 
+	a.api.Use(middleware.CorsMiddleware)
 	// Register routes
 
 	a.api.Handle("GET", "/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -248,4 +249,8 @@ func (a *App) RegisterHandler() {
 	documentGroup.POST("/upload", documentHandler.UploadPDF)
 	documentGroup.POST("/search", documentHandler.SearchDocument)
 	documentGroup.POST("/ask-ai", documentHandler.AskAI)
+	documentGroup.GET("/view", documentHandler.ViewDocument)
+
+	// Middleware
+
 }

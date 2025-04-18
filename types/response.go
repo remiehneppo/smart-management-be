@@ -1,5 +1,7 @@
 package types
 
+import "os"
+
 type Response struct {
 	Status  bool        `json:"status"`
 	Message string      `json:"message"`
@@ -77,4 +79,8 @@ type SearchDocumentResponse struct {
 type AskAIResponse struct {
 	Answer string                   `json:"answer"`
 	Chunks []*ChunkDocumentResponse `json:"chunks"`
+}
+
+type ViewDocumentResponse struct {
+	Document *os.File `json:"document"`
 }

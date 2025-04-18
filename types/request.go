@@ -108,3 +108,7 @@ type AskAIRequest struct {
 	Query    string   `json:"query" binding:"required"`
 	Limit    int      `json:"limit" binding:"required"`
 }
+
+type ViewDocumentRequest struct {
+	FilePath string `json:"file_path" binding:"required"`
+}

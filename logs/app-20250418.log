@@ -103,3 +103,276 @@ time="2025-04-18 09:06:17" level=info msg="POST /api/v1/documents/ask-ai 200 4.8
 time="2025-04-18 09:07:41" level=info msg="Starting graceful shutdown..."
 time="2025-04-18 09:07:41" level=info msg="Disconnecting from database..."
 time="2025-04-18 09:07:41" level=info msg="Graceful shutdown completed"
+time="2025-04-18 09:31:30" level=info msg="Connecting to database..."
+time="2025-04-18 09:31:30" level=info msg="Database connected successfully"
+time="2025-04-18 09:31:31" level=info msg="Weaviate live status: true"
+time="2025-04-18 09:31:31" level=info msg="Server starting on port 8088"
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/index.html 200 231.5µs" client_ip="::1" latency="231.5µs" method=GET path=/swagger/index.html status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/swagger-ui.css 200 339.899µs" client_ip="::1" latency="339.899µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/swagger-ui-bundle.js 200 580.298µs" client_ip="::1" latency="580.298µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 363.199µs" client_ip="::1" latency="363.199µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/favicon-32x32.png 200 25.8µs" client_ip="::1" latency="25.8µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/doc.json 200 189.299µs" client_ip="::1" latency="189.299µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-18 09:31:31" level=info msg="GET /swagger/favicon-32x32.png 304 24µs" client_ip="::1" latency="24µs" method=GET path=/swagger/favicon-32x32.png status=304
+time="2025-04-18 09:32:03" level=warning msg="POST /api/v1/documents/search 401 28.4µs" client_ip="::1" latency="28.4µs" method=POST path=/api/v1/documents/search status=401
+time="2025-04-18 09:32:04" level=warning msg="POST /api/v1/documents/search 401 10.3µs" client_ip="::1" latency="10.3µs" method=POST path=/api/v1/documents/search status=401
+time="2025-04-18 09:32:19" level=warning msg="POST /api/v1/documents/search 400 166.299µs" client_ip="::1" latency="166.299µs" method=POST path=/api/v1/documents/search status=400
+time="2025-04-18 09:32:27" level=info msg="POST /api/v1/documents/search 200 1.027026366s" client_ip="::1" latency=1.027026366s method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 09:32:42" level=error msg="GET /api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf 500 113.487µs" client_ip="::1" latency="113.487µs" method=GET path="/api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf" status=500
+time="2025-04-18 09:33:01" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 09:33:01" level=info msg="Disconnecting from database..."
+time="2025-04-18 09:33:01" level=info msg="Graceful shutdown completed"
+time="2025-04-18 09:33:11" level=info msg="Connecting to database..."
+time="2025-04-18 09:33:11" level=info msg="Database connected successfully"
+time="2025-04-18 09:33:12" level=info msg="Weaviate live status: true"
+time="2025-04-18 09:33:12" level=info msg="Server starting on port 8088"
+time="2025-04-18 09:34:12" level=info msg="Connecting to database..."
+time="2025-04-18 09:34:12" level=info msg="Database connected successfully"
+time="2025-04-18 09:34:13" level=info msg="Weaviate live status: true"
+time="2025-04-18 09:34:13" level=info msg="Server starting on port 8088"
+time="2025-04-18 09:40:50" level=info msg="Connecting to database..."
+time="2025-04-18 09:40:50" level=info msg="Database connected successfully"
+time="2025-04-18 09:40:51" level=info msg="Weaviate live status: true"
+time="2025-04-18 09:40:51" level=info msg="Server starting on port 8088"
+time="2025-04-18 09:41:05" level=info msg="GET /api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf 200 1.5823ms" client_ip="::1" latency=1.5823ms method=GET path="/api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf" status=200
+time="2025-04-18 09:41:08" level=info msg="GET /api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf 200 994.944µs" client_ip="::1" latency="994.944µs" method=GET path="/api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf" status=200
+time="2025-04-18 09:41:37" level=info msg="GET /api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf 200 286.1µs" client_ip="::1" latency="286.1µs" method=GET path="/api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf" status=200
+time="2025-04-18 09:42:10" level=info msg="GET /api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf 200 904.5µs" client_ip="::1" latency="904.5µs" method=GET path="/api/v1/documents/view?path=Giao%20trinh%20ky%20thuat%20dien.pdf" status=200
+time="2025-04-18 09:57:40" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 09:57:40" level=info msg="Disconnecting from database..."
+time="2025-04-18 09:57:40" level=info msg="Graceful shutdown completed"
+time="2025-04-18 10:23:27" level=info msg="Connecting to database..."
+time="2025-04-18 10:23:27" level=info msg="Database connected successfully"
+time="2025-04-18 10:23:27" level=info msg="Weaviate live status: true"
+time="2025-04-18 10:23:28" level=info msg="Server starting on port 8088"
+time="2025-04-18 10:34:14" level=warning msg="OPTIONS /api/v1/login 404 597ns" client_ip="::1" latency=597ns method=OPTIONS path=/api/v1/login status=404
+time="2025-04-18 15:07:06" level=info msg="Connecting to database..."
+time="2025-04-18 15:07:06" level=info msg="Database connected successfully"
+time="2025-04-18 15:07:07" level=info msg="Weaviate live status: true"
+time="2025-04-18 15:07:07" level=info msg="Server starting on port 8088"
+time="2025-04-18 15:09:12" level=warning msg="OPTIONS /auth/login 404 282ns" client_ip="::1" latency=282ns method=OPTIONS path=/auth/login status=404
+time="2025-04-18 15:10:40" level=warning msg="OPTIONS /api/v1/auth/login 404 376ns" client_ip="::1" latency=376ns method=OPTIONS path=/api/v1/auth/login status=404
+time="2025-04-18 15:11:03" level=info msg="POST /api/v1/auth/login 200 973.922µs" client_ip="::1" latency="973.922µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:11:37" level=warning msg="OPTIONS /api/v1/auth/login 404 473ns" client_ip="::1" latency=473ns method=OPTIONS path=/api/v1/auth/login status=404
+time="2025-04-18 15:12:09" level=warning msg="OPTIONS /api/v1/auth/login 404 285ns" client_ip="::1" latency=285ns method=OPTIONS path=/api/v1/auth/login status=404
+time="2025-04-18 15:12:21" level=warning msg="OPTIONS /api/v1/auth/login 404 280ns" client_ip="::1" latency=280ns method=OPTIONS path=/api/v1/auth/login status=404
+time="2025-04-18 15:17:11" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 15:17:11" level=info msg="Disconnecting from database..."
+time="2025-04-18 15:17:11" level=info msg="Graceful shutdown completed"
+time="2025-04-18 15:17:20" level=info msg="Connecting to database..."
+time="2025-04-18 15:17:20" level=info msg="Database connected successfully"
+time="2025-04-18 15:17:20" level=info msg="Weaviate live status: true"
+time="2025-04-18 15:17:20" level=info msg="Server starting on port 8088"
+time="2025-04-18 15:17:22" level=info msg="OPTIONS /api/v1/auth/login 200 23.608µs" client_ip="::1" latency="23.608µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:17:22" level=info msg="POST /api/v1/auth/login 200 1.441848ms" client_ip="::1" latency=1.441848ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:17:29" level=info msg="OPTIONS /api/v1/auth/login 200 4.59µs" client_ip="::1" latency="4.59µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:17:29" level=info msg="POST /api/v1/auth/login 200 606.96µs" client_ip="::1" latency="606.96µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:20:34" level=info msg="OPTIONS /api/v1/auth/login 200 5.268µs" client_ip="::1" latency="5.268µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:20:34" level=info msg="POST /api/v1/auth/login 200 685.748µs" client_ip="::1" latency="685.748µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:07" level=info msg="POST /api/v1/auth/login 200 783.3µs" client_ip="::1" latency="783.3µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:12" level=info msg="POST /api/v1/auth/login 200 682.599µs" client_ip="::1" latency="682.599µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:23" level=info msg="OPTIONS /api/v1/auth/login 200 4.492µs" client_ip="::1" latency="4.492µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:23" level=info msg="POST /api/v1/auth/login 200 677.325µs" client_ip="::1" latency="677.325µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:52" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 15:22:52" level=info msg="Disconnecting from database..."
+time="2025-04-18 15:22:52" level=info msg="Graceful shutdown completed"
+time="2025-04-18 15:22:53" level=info msg="Connecting to database..."
+time="2025-04-18 15:22:53" level=info msg="Database connected successfully"
+time="2025-04-18 15:22:54" level=info msg="Weaviate live status: true"
+time="2025-04-18 15:22:54" level=info msg="Server starting on port 8088"
+time="2025-04-18 15:22:55" level=info msg="OPTIONS /api/v1/auth/login 200 25.182µs" client_ip="::1" latency="25.182µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:22:55" level=info msg="POST /api/v1/auth/login 200 926.815µs" client_ip="::1" latency="926.815µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:23:01" level=info msg="POST /api/v1/auth/login 200 806.693µs" client_ip="::1" latency="806.693µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:23:09" level=info msg="OPTIONS /api/v1/auth/login 200 4.308µs" client_ip="::1" latency="4.308µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:23:09" level=info msg="POST /api/v1/auth/login 200 570.625µs" client_ip="::1" latency="570.625µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:24:57" level=info msg="OPTIONS /api/v1/auth/login 200 5.592µs" client_ip="::1" latency="5.592µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:24:57" level=info msg="POST /api/v1/auth/login 200 614.808µs" client_ip="::1" latency="614.808µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:25:25" level=info msg="OPTIONS /api/v1/auth/login 200 6.2µs" client_ip="::1" latency="6.2µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:25:25" level=info msg="POST /api/v1/auth/login 200 761.399µs" client_ip="::1" latency="761.399µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:27:39" level=info msg="OPTIONS /api/v1/auth/login 200 5.1µs" client_ip="::1" latency="5.1µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:27:39" level=info msg="POST /api/v1/auth/login 200 686.6µs" client_ip="::1" latency="686.6µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:30:28" level=info msg="OPTIONS /api/v1/auth/login 200 16.7µs" client_ip="::1" latency="16.7µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:30:28" level=info msg="POST /api/v1/auth/login 200 679.6µs" client_ip="::1" latency="679.6µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:30:34" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 15:30:34" level=info msg="Disconnecting from database..."
+time="2025-04-18 15:30:34" level=info msg="Graceful shutdown completed"
+time="2025-04-18 15:30:35" level=info msg="Connecting to database..."
+time="2025-04-18 15:30:35" level=info msg="Database connected successfully"
+time="2025-04-18 15:30:36" level=info msg="Weaviate live status: true"
+time="2025-04-18 15:30:36" level=info msg="Server starting on port 8088"
+time="2025-04-18 15:30:40" level=info msg="OPTIONS /api/v1/auth/login 200 22µs" client_ip="::1" latency="22µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 15:30:40" level=info msg="POST /api/v1/auth/login 200 852.042µs" client_ip="::1" latency="852.042µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:30:44" level=info msg="POST /api/v1/auth/login 200 712.708µs" client_ip="::1" latency="712.708µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 15:55:45" level=info msg="POST /api/v1/documents/search 200 1.868059343s" client_ip="::1" latency=1.868059343s method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 15:56:49" level=warning msg="POST /api/v1/documents/ask-ai 400 99.908µs" client_ip="::1" latency="99.908µs" method=POST path=/api/v1/documents/ask-ai status=400
+time="2025-04-18 15:57:00" level=info msg="POST /api/v1/documents/ask-ai 200 5.216467776s" client_ip="::1" latency=5.216467776s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 16:16:31" level=info msg="OPTIONS /api/v1/auth/login 200 15.863µs" client_ip="::1" latency="15.863µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:16:31" level=info msg="POST /api/v1/auth/login 200 959.81µs" client_ip="::1" latency="959.81µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:16:46" level=info msg="OPTIONS /api/v1/auth/login 200 4.698µs" client_ip="::1" latency="4.698µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:16:46" level=info msg="POST /api/v1/auth/login 200 740.217µs" client_ip="::1" latency="740.217µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:18:03" level=info msg="OPTIONS /api/v1/auth/login 200 5.773µs" client_ip="::1" latency="5.773µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:18:03" level=info msg="POST /api/v1/auth/login 200 683.227µs" client_ip="::1" latency="683.227µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:19:27" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:19:27" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:19:27" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:19:29" level=info msg="Connecting to database..."
+time="2025-04-18 16:19:29" level=info msg="Database connected successfully"
+time="2025-04-18 16:19:30" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:19:30" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:19:43" level=info msg="OPTIONS /api/v1/auth/login 200 29.797µs" client_ip="::1" latency="29.797µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:19:43" level=info msg="POST /api/v1/auth/login 200 849.432µs" client_ip="::1" latency="849.432µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:21:10" level=info msg="OPTIONS /api/v1/auth/login 200 6.515µs" client_ip="::1" latency="6.515µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:21:10" level=info msg="POST /api/v1/auth/login 200 817.856µs" client_ip="::1" latency="817.856µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:21:12" level=info msg="POST /api/v1/auth/login 200 698.243µs" client_ip="::1" latency="698.243µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:21:17" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:21:17" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:21:17" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:21:28" level=info msg="Connecting to database..."
+time="2025-04-18 16:21:29" level=info msg="Database connected successfully"
+time="2025-04-18 16:21:29" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:21:29" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:21:47" level=info msg="OPTIONS /api/v1/auth/login 200 10.176695538s" client_ip="::1" latency=10.176695538s method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:22:01" level=info msg="POST /api/v1/auth/login 200 12.679069161s" client_ip="::1" latency=12.679069161s method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:22:44" level=info msg="OPTIONS /api/v1/auth/login 200 4.217292274s" client_ip="::1" latency=4.217292274s method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:22:45" level=info msg="POST /api/v1/auth/login 200 729.984656ms" client_ip="::1" latency=729.984656ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:24:08" level=info msg="OPTIONS /api/v1/auth/login 200 3.632866721s" client_ip="::1" latency=3.632866721s method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:24:09" level=info msg="POST /api/v1/auth/login 200 542.058353ms" client_ip="::1" latency=542.058353ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:27:49" level=info msg="Connecting to database..."
+time="2025-04-18 16:27:49" level=info msg="Database connected successfully"
+time="2025-04-18 16:27:50" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:27:50" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:27:51" level=info msg="OPTIONS /api/v1/auth/login 200 57.377µs" client_ip="::1" latency="57.377µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:27:51" level=info msg="POST /api/v1/auth/login 200 995.293µs" client_ip="::1" latency="995.293µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:27:51" level=info msg="POST /api/v1/auth/login 200 773.637µs" client_ip="::1" latency="773.637µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:27:55" level=info msg="OPTIONS /api/v1/auth/login 200 5.635µs" client_ip="::1" latency="5.635µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:27:55" level=info msg="POST /api/v1/auth/login 200 670.51µs" client_ip="::1" latency="670.51µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:28:11" level=info msg="OPTIONS /api/v1/auth/login 200 4.886µs" client_ip="::1" latency="4.886µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:28:11" level=info msg="POST /api/v1/auth/login 200 619.951µs" client_ip="::1" latency="619.951µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:29:19" level=info msg="OPTIONS /api/v1/auth/login 200 32.73µs" client_ip="::1" latency="32.73µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:29:19" level=info msg="POST /api/v1/auth/login 200 788.47µs" client_ip="::1" latency="788.47µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:30:31" level=info msg="OPTIONS /api/v1/auth/login 200 21.011µs" client_ip="::1" latency="21.011µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:30:31" level=info msg="POST /api/v1/auth/login 200 834.585µs" client_ip="::1" latency="834.585µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:34:10" level=info msg="OPTIONS /api/v1/auth/login 200 6.163µs" client_ip="::1" latency="6.163µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:34:10" level=info msg="POST /api/v1/auth/login 200 679.853µs" client_ip="::1" latency="679.853µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:34:47" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:34:47" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:34:47" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:34:48" level=info msg="Connecting to database..."
+time="2025-04-18 16:34:48" level=info msg="Database connected successfully"
+time="2025-04-18 16:34:49" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:34:49" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:34:52" level=info msg="OPTIONS /api/v1/auth/login 200 24.117µs" client_ip="::1" latency="24.117µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:34:52" level=info msg="POST /api/v1/auth/login 200 871.99µs" client_ip="::1" latency="871.99µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:21" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:38:21" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:38:21" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:38:22" level=info msg="Connecting to database..."
+time="2025-04-18 16:38:22" level=info msg="Database connected successfully"
+time="2025-04-18 16:38:23" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:38:23" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:38:25" level=info msg="OPTIONS /api/v1/auth/login 200 30.065µs" client_ip="::1" latency="30.065µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:25" level=info msg="POST /api/v1/auth/login 200 843.338µs" client_ip="::1" latency="843.338µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:28" level=info msg="POST /api/v1/auth/login 200 692.259µs" client_ip="::1" latency="692.259µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:29" level=info msg="POST /api/v1/auth/login 200 873.967µs" client_ip="::1" latency="873.967µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:34" level=info msg="OPTIONS /api/v1/auth/login 200 4.794µs" client_ip="::1" latency="4.794µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:38:34" level=info msg="POST /api/v1/auth/login 200 688.054µs" client_ip="::1" latency="688.054µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:40:43" level=info msg="OPTIONS /api/v1/auth/login 200 6.483µs" client_ip="::1" latency="6.483µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:40:43" level=info msg="POST /api/v1/auth/login 200 907.159µs" client_ip="::1" latency="907.159µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:41:20" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:41:20" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:41:20" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:41:24" level=info msg="Connecting to database..."
+time="2025-04-18 16:41:24" level=info msg="Database connected successfully"
+time="2025-04-18 16:41:25" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:41:25" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:41:27" level=info msg="OPTIONS /api/v1/auth/login 200 23.968µs" client_ip="::1" latency="23.968µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:41:27" level=info msg="POST /api/v1/auth/login 200 802.609µs" client_ip="::1" latency="802.609µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:41:38" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:41:38" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:41:38" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:41:39" level=info msg="Connecting to database..."
+time="2025-04-18 16:41:39" level=info msg="Database connected successfully"
+time="2025-04-18 16:41:40" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:41:40" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:41:48" level=info msg="OPTIONS /api/v1/auth/login 200 25.275µs" client_ip="::1" latency="25.275µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:41:48" level=info msg="POST /api/v1/auth/login 200 894.869µs" client_ip="::1" latency="894.869µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:42:36" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:42:36" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:42:36" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:42:37" level=info msg="Connecting to database..."
+time="2025-04-18 16:42:37" level=info msg="Database connected successfully"
+time="2025-04-18 16:42:38" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:42:38" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:42:39" level=info msg="OPTIONS /api/v1/auth/login 200 37.89µs" client_ip="::1" latency="37.89µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:42:39" level=info msg="POST /api/v1/auth/login 200 971.82µs" client_ip="::1" latency="971.82µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:42:40" level=info msg="POST /api/v1/auth/login 200 762.3µs" client_ip="::1" latency="762.3µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:42:44" level=info msg="OPTIONS /api/v1/auth/login 200 5.4µs" client_ip="::1" latency="5.4µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:42:44" level=info msg="POST /api/v1/auth/login 200 628.74µs" client_ip="::1" latency="628.74µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:43:54" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:43:54" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:43:54" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:43:56" level=info msg="Connecting to database..."
+time="2025-04-18 16:43:56" level=info msg="Database connected successfully"
+time="2025-04-18 16:43:56" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:43:57" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:44:00" level=info msg="OPTIONS /api/v1/auth/login 200 21.69µs" client_ip="::1" latency="21.69µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:44:00" level=info msg="POST /api/v1/auth/login 200 749.88µs" client_ip="::1" latency="749.88µs" method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:45:32" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 16:45:32" level=info msg="Disconnecting from database..."
+time="2025-04-18 16:45:32" level=info msg="Graceful shutdown completed"
+time="2025-04-18 16:45:41" level=info msg="Connecting to database..."
+time="2025-04-18 16:45:41" level=info msg="Database connected successfully"
+time="2025-04-18 16:45:41" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:45:41" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:45:57" level=info msg="OPTIONS /api/v1/auth/login 200 8.754341201s" client_ip="::1" latency=8.754341201s method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:51:11" level=info msg="Connecting to database..."
+time="2025-04-18 16:51:11" level=info msg="Database connected successfully"
+time="2025-04-18 16:51:12" level=info msg="Weaviate live status: true"
+time="2025-04-18 16:51:12" level=info msg="Server starting on port 8088"
+time="2025-04-18 16:51:13" level=info msg="OPTIONS /api/v1/auth/login 200 29.353µs" client_ip="::1" latency="29.353µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-18 16:51:13" level=info msg="POST /api/v1/auth/login 200 1.125573ms" client_ip="::1" latency=1.125573ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-18 16:51:19" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.641µs" client_ip="::1" latency="5.641µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-18 16:51:20" level=info msg="POST /api/v1/assistant/chat-stateless 200 1.118461857s" client_ip="::1" latency=1.118461857s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-18 16:51:26" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 4.325µs" client_ip="::1" latency="4.325µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-18 16:51:28" level=info msg="POST /api/v1/assistant/chat-stateless 200 1.259973317s" client_ip="::1" latency=1.259973317s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-18 16:51:49" level=info msg="OPTIONS /api/v1/documents/search 200 24.062µs" client_ip="::1" latency="24.062µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-18 16:51:50" level=info msg="POST /api/v1/documents/search 200 1.026074827s" client_ip="::1" latency=1.026074827s method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 16:52:08" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 3.949µs" client_ip="::1" latency="3.949µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 16:52:15" level=info msg="POST /api/v1/documents/ask-ai 200 6.72435323s" client_ip="::1" latency=6.72435323s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 16:52:33" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 6.106µs" client_ip="::1" latency="6.106µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 16:52:43" level=info msg="POST /api/v1/documents/ask-ai 200 9.822153588s" client_ip="::1" latency=9.822153588s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:03:27" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 21.47µs" client_ip="::1" latency="21.47µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:03:40" level=info msg="POST /api/v1/documents/ask-ai 200 11.414739556s" client_ip="::1" latency=11.414739556s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:08:00" level=info msg="OPTIONS /api/v1/documents/search 200 7.614µs" client_ip="::1" latency="7.614µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-18 17:08:01" level=info msg="POST /api/v1/documents/search 200 1.221821615s" client_ip="::1" latency=1.221821615s method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 17:08:05" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 200 4.059µs" client_ip="::1" latency="4.059µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=200
+time="2025-04-18 17:08:05" level=error msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 500 69.286µs" client_ip="::1" latency="69.286µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=500
+time="2025-04-18 17:08:21" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.042µs" client_ip="::1" latency="4.042µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:08:34" level=info msg="POST /api/v1/documents/ask-ai 200 13.154774946s" client_ip="::1" latency=13.154774946s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:12:23" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 33.669µs" client_ip="::1" latency="33.669µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 17:12:30" level=info msg="POST /api/v1/documents/ask-ai 200 7.187054468s" client_ip="::1" latency=7.187054468s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 18:15:42" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 17.465µs" client_ip="::1" latency="17.465µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 18:15:56" level=info msg="POST /api/v1/documents/ask-ai 200 12.565057538s" client_ip="::1" latency=12.565057538s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-18 18:18:14" level=info msg="OPTIONS /api/v1/documents/search 200 3.933µs" client_ip="::1" latency="3.933µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-18 18:18:22" level=info msg="POST /api/v1/documents/search 200 7.91599854s" client_ip="::1" latency=7.91599854s method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 18:18:37" level=info msg="OPTIONS /api/v1/documents/search 200 4.027µs" client_ip="::1" latency="4.027µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-18 18:18:37" level=info msg="POST /api/v1/documents/search 200 537.330024ms" client_ip="::1" latency=537.330024ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-18 18:23:20" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 200 4.282µs" client_ip="::1" latency="4.282µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=200
+time="2025-04-18 18:23:20" level=error msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 500 53.764µs" client_ip="::1" latency="53.764µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=500
+time="2025-04-18 18:23:22" level=error msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 500 75.46µs" client_ip="::1" latency="75.46µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=500
+time="2025-04-18 18:23:29" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 200 4.399µs" client_ip="::1" latency="4.399µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=200
+time="2025-04-18 18:23:29" level=error msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat 500 58.237µs" client_ip="::1" latency="58.237µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat" status=500
+time="2025-04-18 18:25:55" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 5.734µs" client_ip="::1" latency="5.734µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:25:56" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 367.67098ms" client_ip="::1" latency=367.67098ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:25:59" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 56.634157ms" client_ip="::1" latency=56.634157ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:25" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 18.29µs" client_ip="::1" latency="18.29µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:25" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 27.288028ms" client_ip="::1" latency=27.288028ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:28" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 228.255µs" client_ip="::1" latency="228.255µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:32" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 19.069µs" client_ip="::1" latency="19.069µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:32" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 314.069621ms" client_ip="::1" latency=314.069621ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:36" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 498.96µs" client_ip="::1" latency="498.96µs" method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:46" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 15.405µs" client_ip="::1" latency="15.405µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:26:46" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf 200 16.534854ms" client_ip="::1" latency=16.534854ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+giai+thuat.pdf" status=200
+time="2025-04-18 18:28:07" level=info msg="Starting graceful shutdown..."
+time="2025-04-18 18:28:07" level=info msg="Disconnecting from database..."
+time="2025-04-18 18:28:07" level=info msg="Graceful shutdown completed"

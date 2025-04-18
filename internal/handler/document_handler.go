@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"io"
 
 	"github.com/gin-gonic/gin"
 	"github.com/remiehneppo/be-task-management/internal/service"
@@ -14,6 +15,7 @@ type DocumentHandler interface {
 	UploadPDF(ctx *gin.Context)
 	SearchDocument(ctx *gin.Context)
 	AskAI(ctx *gin.Context)
+	ViewDocument(ctx *gin.Context)
 }
 
 type documentHandler struct {
@@ -150,4 +152,50 @@ func (h *documentHandler) AskAI(ctx *gin.Context) {
 		Message: "AI response",
 		Data:    res,
 	})
+}
+
+// ViewDocument godoc
+// @Summary View a PDF document
+// @Description Streams a PDF document to the client for viewing in the browser
+// @Tags documents
+// @Accept json
+// @Produce application/pdf
+// @Param path query string true "Path to the PDF document"
+// @Success 200 {file} file "PDF document streamed successfully"
+// @Failure 400 {object} types.Response "Invalid request: missing document path"
+// @Failure 500 {object} types.Response "Internal server error"
+// @Security BearerAuth
+// @Router /documents/view [get]
+func (h *documentHandler) ViewDocument(ctx *gin.Context) {
+	documentPath := ctx.Query("path")
+	if documentPath == "" {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "Invalid request: missing document path",
+		})
+		return
+	}
+	documentRes, err := h.documentService.ViewDocument(ctx, &types.ViewDocumentRequest{
+		FilePath: documentPath,
+	})
+	if err != nil {
+		ctx.JSON(500, types.Response{
+			Status:  false,
+			Message: "Internal server error",
+		})
+		return
+	}
+	defer documentRes.Document.Close()
+	ctx.Header("Content-Disposition", "inline")
+	ctx.Header("Content-Type", "application/pdf")
+
+	_, err = io.Copy(ctx.Writer, documentRes.Document)
+	if err != nil {
+		ctx.JSON(500, types.Response{
+			Status:  false,
+			Message: "Internal server error",
+		})
+		return
+	}
+
 }

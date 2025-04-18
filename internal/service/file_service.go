@@ -16,6 +16,7 @@ var _ FileService = (*fileService)(nil)
 
 type FileService interface {
 	UploadFile(ctx context.Context, req types.UploadFileRequest) (*types.UploadFileResponse, error)
+	GetFile(ctx context.Context, filePath string) (*os.File, error)
 	// DownloadFile(fileID string) (string, error)
 	// DeleteFile(fileID string) error
 	// GetFileMetadata(fileID string) (*types.FileMetadata, error)
@@ -87,4 +88,13 @@ func (f *fileService) UploadFile(ctx context.Context, req types.UploadFileReques
 		FileName: req.FileName,
 		FilePath: filePath,
 	}, nil
+}
+
+func (f *fileService) GetFile(ctx context.Context, filePath string) (*os.File, error) {
+	filePath = filepath.Join(f.uploadDir, filePath)
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
 }
