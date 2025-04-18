@@ -64,3 +64,17 @@ type ChunkDocumentResponse struct {
 	ChunkNumber int      `json:"chunk_number" bson:"chunk_number"`
 	Tags        []string `json:"tags" bson:"tags"`
 }
+
+type UploadDocumentResponse struct {
+	ID       string `json:"id"`
+	FilePath string `json:"file_path"`
+}
+
+type SearchDocumentResponse struct {
+	Chunks []*ChunkDocumentResponse `json:"chunks"`
+}
+
+type AskAIResponse struct {
+	Answer string                   `json:"answer"`
+	Chunks []*ChunkDocumentResponse `json:"chunks"`
+}

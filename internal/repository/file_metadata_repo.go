@@ -7,6 +7,8 @@ import (
 	"github.com/remiehneppo/be-task-management/types"
 )
 
+var fileMetadataCollection = "file_metadata"
+
 var _ FileMetadataRepository = (*fileMetadataRepository)(nil)
 
 type FileMetadataRepository interface {
@@ -22,10 +24,10 @@ type fileMetadataRepository struct {
 	collection string
 }
 
-func NewFileMetadataRepository(db database.Database, collection string) *fileMetadataRepository {
+func NewFileMetadataRepository(db database.Database) *fileMetadataRepository {
 	return &fileMetadataRepository{
 		database:   db,
-		collection: collection,
+		collection: fileMetadataCollection,
 	}
 }
 

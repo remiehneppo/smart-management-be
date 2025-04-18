@@ -85,6 +85,26 @@ type PaginateMessagesRequest struct {
 }
 
 type UploadFileRequest struct {
-	FileName   string               `json:"file_name" binding:"required"`
-	FileHeader multipart.FileHeader `json:"file" binding:"required"`
+	FileName   string                `json:"file_name" binding:"required"`
+	FileHeader *multipart.FileHeader `json:"file" binding:"required"`
+}
+
+type UploadDocumentRequest struct {
+	Title string   `json:"title" binding:"required"`
+	Tags  []string `json:"tags" binding:"required"`
+}
+
+type SearchDocumentRequest struct {
+	Title string   `json:"title,omitempty"`
+	Tags  []string `json:"tags,omitempty"`
+	Query string   `json:"query" binding:"required"`
+	Limit int      `json:"limit" binding:"required"`
+}
+
+type AskAIRequest struct {
+	Question string   `json:"question" binding:"required"`
+	Title    string   `json:"title,omitempty"`
+	Tags     []string `json:"tags,omitempty"`
+	Query    string   `json:"query" binding:"required"`
+	Limit    int      `json:"limit" binding:"required"`
 }

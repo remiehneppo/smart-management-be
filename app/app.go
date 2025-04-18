@@ -20,12 +20,15 @@ import (
 	"github.com/remiehneppo/be-task-management/internal/service"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/weaviate/weaviate-go-client/v4/weaviate"
+	"github.com/weaviate/weaviate-go-client/v4/weaviate/auth"
 )
 
 type App struct {
 	api      *gin.Engine
 	port     string
 	database database.Database
+	vectorDb *weaviate.Client
 	logger   *logger.Logger
 	config   *config.AppConfig
 }
@@ -54,12 +57,39 @@ func NewApp(cfg *config.AppConfig) *App {
 	}
 	logger.Info("Database connected successfully")
 
+	vectorDbCfg := weaviate.Config{
+		Host:   cfg.Weaviate.Host,
+		Scheme: cfg.Weaviate.Scheme,
+	}
+	if cfg.Weaviate.APIKey != "" {
+		vectorDbCfg.AuthConfig = auth.ApiKey{
+			Value: cfg.Weaviate.APIKey,
+		}
+		vectorDbCfg.Headers = map[string]string{
+			"X-Weaviate-Api-Key":     cfg.Weaviate.APIKey,
+			"X-Weaviate-Cluster-Url": fmt.Sprintf("%s://%s", cfg.Weaviate.Scheme, cfg.Weaviate.Host),
+		}
+	}
+	for _, header := range cfg.Weaviate.Header {
+		vectorDbCfg.Headers[header.Key] = header.Value
+	}
+	weaviateClient, err := weaviate.NewClient(vectorDbCfg)
+	if err != nil {
+		logger.Fatal("error connect to vector database")
+	}
+	live, err := weaviateClient.Misc().LiveChecker().Do(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	logger.Info("Weaviate live status: ", live)
+
 	return &App{
 		api:      api,
 		port:     cfg.Port,
 		database: db,
 		logger:   logger,
 		config:   cfg,
+		vectorDb: weaviateClient,
 	}
 }
 
@@ -128,6 +158,15 @@ func (a *App) RegisterHandler() {
 	userRepo := repository.NewUserRepository(a.database)
 	taskRepo := repository.NewTaskRepository(a.database)
 	reportRepo := repository.NewReportRepository(a.database)
+	fileMetadataRepo := repository.NewFileMetadataRepository(a.database)
+	documentClass := repository.DefaultDocumentClass
+	documentClass.Vectorizer = a.config.Weaviate.Text2Vec
+	documentVectorRepo := repository.NewDocumentVectorRepository(
+		context.Background(),
+		a.vectorDb,
+		documentClass,
+		100,
+	)
 
 	jwtService := service.NewJWTService(
 		a.config.JWT.Secret,
@@ -140,11 +179,30 @@ func (a *App) RegisterHandler() {
 	loginService := service.NewLoginService(jwtService, userRepo)
 	userService := service.NewUserService(userRepo)
 	taskService := service.NewTaskService(taskRepo, reportRepo, userRepo)
+	fileService := service.NewFileService(
+		a.config.FileUpload.UploadDir,
+		a.config.FileUpload.MaxSize,
+		fileMetadataRepo,
+	)
+	pdfService := service.NewPDFService(service.DefaultDocumentServiceConfig)
+	ragService := service.NewRAGService(
+		aiService,
+		a.config.RAG.SystemPrompt,
+	)
+	documentService := service.NewDocumentService(
+		aiService,
+		ragService,
+		fileService,
+		pdfService,
+		documentVectorRepo,
+		[]string{".pdf"},
+	)
 
 	aiAssistantHandler := handler.NewAIAssistantHandler(aiAssistantService)
 	loginHandler := handler.NewLoginHandler(loginService, a.logger)
 	userHandler := handler.NewUserHandler(userService, a.logger)
 	taskHandler := handler.NewTaskHandler(taskService, a.logger)
+	documentHandler := handler.NewDocumentHandler(documentService)
 
 	authMiddleware := middleware.NewAuthMiddleware(jwtService)
 
@@ -184,4 +242,10 @@ func (a *App) RegisterHandler() {
 	aiAssistantGroup.Use(authMiddleware.AuthBearerMiddleware())
 	aiAssistantGroup.POST("/chat", aiAssistantHandler.ChatWithAssistant)
 	aiAssistantGroup.POST("/chat-stateless", aiAssistantHandler.ChatWithAssistantStateless)
+
+	documentGroup := a.api.Group("/api/v1/documents")
+	documentGroup.Use(authMiddleware.AuthBearerMiddleware())
+	documentGroup.POST("/upload", documentHandler.UploadPDF)
+	documentGroup.POST("/search", documentHandler.SearchDocument)
+	documentGroup.POST("/ask-ai", documentHandler.AskAI)
 }

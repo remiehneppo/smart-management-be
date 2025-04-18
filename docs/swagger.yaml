@@ -1,5 +1,33 @@
 basePath: /api/v1
 definitions:
+  types.AskAIRequest:
+    properties:
+      limit:
+        type: integer
+      query:
+        type: string
+      question:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    required:
+    - limit
+    - query
+    - question
+    type: object
+  types.AskAIResponse:
+    properties:
+      answer:
+        type: string
+      chunks:
+        items:
+          $ref: '#/definitions/types.ChunkDocumentResponse'
+        type: array
+    type: object
   types.ChatResponse:
     properties:
       content:
@@ -13,6 +41,23 @@ definitions:
         type: array
     required:
     - messages
+    type: object
+  types.ChunkDocumentResponse:
+    properties:
+      chunk_number:
+        type: integer
+      content:
+        type: string
+      id:
+        type: string
+      page_number:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
     type: object
   types.CreateReportRequest:
     properties:
@@ -119,6 +164,29 @@ definitions:
         type: string
       status:
         type: boolean
+    type: object
+  types.SearchDocumentRequest:
+    properties:
+      limit:
+        type: integer
+      query:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    required:
+    - limit
+    - query
+    type: object
+  types.SearchDocumentResponse:
+    properties:
+      chunks:
+        items:
+          $ref: '#/definitions/types.ChunkDocumentResponse'
+        type: array
     type: object
   types.UpdatePasswordRequest:
     properties:
@@ -326,6 +394,118 @@ paths:
       summary: Refresh tokens
       tags:
       - authentication
+  /documents/ask-ai:
+    post:
+      consumes:
+      - application/json
+      description: Sends a question to the AI and retrieves a response
+      parameters:
+      - description: Question for the AI
+        in: body
+        name: question
+        required: true
+        schema:
+          $ref: '#/definitions/types.AskAIRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: AI response
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.AskAIResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Ask AI a question
+      tags:
+      - documents
+  /documents/search:
+    post:
+      consumes:
+      - application/json
+      description: Searches for documents based on the provided query
+      parameters:
+      - description: Search query
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/types.SearchDocumentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Search results
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/types.SearchDocumentResponse'
+                  type: array
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Search documents
+      tags:
+      - documents
+  /documents/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads a PDF file and processes it for further use
+      parameters:
+      - description: PDF file to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Document metadata in JSON format
+        in: formData
+        name: metadata
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File uploaded successfully
+          schema:
+            $ref: '#/definitions/types.Response'
+        "400":
+          description: File upload error or invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Upload a PDF document
+      tags:
+      - documents
   /tasks/{id}:
     get:
       consumes:

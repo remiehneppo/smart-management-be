@@ -23,6 +23,7 @@ var DefaultDocumentClass = &models.Class{
 		{Name: "chunk_number", DataType: []string{"int"}},
 		{Name: "tags", DataType: []string{"text[]"}},
 	},
+	VectorIndexType: "hnsw",
 }
 
 type DocumentVectorRepository interface {
@@ -177,19 +178,6 @@ func buildMetadataFilter(metadata *types.DocumentMetadata) *filters.WhereBuilder
 		whereFilter = filters.Where().WithPath([]string{"title"}).
 			WithOperator(filters.Equal).
 			WithValueString(metadata.Title)
-	}
-
-	if metadata.Source != "" {
-		sourceFilter := filters.Where().
-			WithPath([]string{"source"}).
-			WithOperator(filters.Equal).
-			WithValueString(metadata.Source)
-		if whereFilter == nil {
-			whereFilter = sourceFilter
-		} else {
-			whereFilter = whereFilter.WithOperator(filters.And).WithOperands([]*filters.WhereBuilder{sourceFilter})
-		}
-
 	}
 
 	if len(metadata.Tags) > 0 {

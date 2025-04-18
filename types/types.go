@@ -151,8 +151,7 @@ type DocumentChunk struct {
 }
 
 type DocumentMetadata struct {
-	Title      string   `json:"title"`
-	Source     string   `json:"source"`
-	TotalPages int      `json:"total_pages"`
-	Tags       []string `json:"tags"`
+	Title    string   `json:"title"`
+	Tags     []string `json:"tags"`
+	FilePath string   `json:"file_path"`
 }

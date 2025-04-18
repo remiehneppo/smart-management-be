@@ -10,9 +10,23 @@ import (
 )
 
 type AppConfig struct {
-	Port    string       `mapstructure:"port"`
-	Logger  LoggerConfig `mapstructure:"logger"`
-	OpenAI  OpenaiConfig `mapstructure:"openai"`
+	Port       string       `mapstructure:"port"`
+	Logger     LoggerConfig `mapstructure:"logger"`
+	OpenAI     OpenaiConfig `mapstructure:"openai"`
+	FileUpload struct {
+		UploadDir string `mapstructure:"upload_dir"`
+		MaxSize   int64  `mapstructure:"max_size"`
+	} `mapstructure:"file_upload"`
+	Weaviate struct {
+		Host     string `mapstructure:"host"`
+		Scheme   string `mapstructure:"scheme"`
+		Text2Vec string `mapstructure:"text2vec"`
+		APIKey   string `mapstructure:"API_KEY"`
+		Header   []struct {
+			Key   string `mapstructure:"key"`
+			Value string `mapstructure:"value"`
+		} `mapstructure:"header"`
+	}
 	MongoDB struct {
 		URI      string `mapstructure:"URI"`
 		Database string `mapstructure:"DATABASE"`
@@ -22,6 +36,9 @@ type AppConfig struct {
 		Issuer string `mapstructure:"ISSUER"`
 		Expire int64  `mapstructure:"EXPIRE"`
 	} `mapstructure:"JWT"`
+	RAG struct {
+		SystemPrompt string `mapstructure:"system_prompt"`
+	} `mapstructure:"rag"`
 	Environment string `mapstructure:"ENVIRONMENT"`
 }
 
@@ -66,6 +83,7 @@ func LoadConfig(path string) (*AppConfig, error) {
 	viper.BindEnv("JWT.EXPIRE", "JWT_EXPIRE")
 	viper.BindEnv("ENVIRONMENT", "ENVIRONMENT")
 	viper.BindEnv("OPENAI.API_KEY", "OPENAI_API_KEY")
+	viper.BindEnv("WEAVIATE.API_KEY", "WEAVIATE_API_KEY")
 
 	var config AppConfig
 	if err := viper.Unmarshal(&config); err != nil {

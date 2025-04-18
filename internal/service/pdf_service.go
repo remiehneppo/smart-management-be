@@ -21,7 +21,7 @@ import (
 
 type PDFService interface {
 	GetTotalPages(filePath string) (int, error)
-	ProcessPDF(filePath string, req types.UploadRequest) ([]*types.DocumentChunk, error)
+	ProcessPDF(filePath string) ([]*types.DocumentChunk, error)
 	ExtractAllText(filePath string) ([]string, error)
 }
 
@@ -83,7 +83,7 @@ func (s *pdfService) GetTotalPages(filePath string) (int, error) {
 // Returns:
 //   - []*types.DocumentChunk: List of document chunks
 //   - error: Error if processing fails
-func (s *pdfService) ProcessPDF(filePath string, req types.UploadRequest) ([]*types.DocumentChunk, error) {
+func (s *pdfService) ProcessPDF(filePath string) ([]*types.DocumentChunk, error) {
 	chunks := make([]*types.DocumentChunk, 0)
 
 	// Get total pages
@@ -198,28 +198,28 @@ func (s *pdfService) convertPDFToImages(pdfPath string, outputDir string) ([]str
 	// Sort image paths to ensure correct order
 	sort.Strings(imagePaths)
 
-	for i, imagePath := range imagePaths {
-		processedImage := filepath.Join(outputDir, "processed_"+strconv.Itoa(i+1)+".png")
+	// for i, imagePath := range imagePaths {
+	// 	processedImage := filepath.Join(outputDir, "processed_"+strconv.Itoa(i+1)+".png")
 
-		// Preprocess image with ImageMagick to improve OCR quality
-		preprocessCmd := exec.Command("convert", imagePath,
-			"-density", "300",
-			"-colorspace", "gray",
-			"-brightness-contrast", "0x30",
-			"-normalize",
-			"-despeckle",
-			"-filter", "Gaussian",
-			"-define", "filter:sigma=1.5",
-			"-threshold", "50%",
-			"-sharpen", "0x1.0",
-			processedImage)
+	// 	// Preprocess image with ImageMagick to improve OCR quality
+	// 	preprocessCmd := exec.Command("convert", imagePath,
+	// 		"-density", "300",
+	// 		"-colorspace", "gray",
+	// 		"-brightness-contrast", "0x30",
+	// 		"-normalize",
+	// 		"-despeckle",
+	// 		"-filter", "Gaussian",
+	// 		"-define", "filter:sigma=1.5",
+	// 		"-threshold", "50%",
+	// 		"-sharpen", "0x1.0",
+	// 		processedImage)
 
-		if err := preprocessCmd.Run(); err != nil {
-			log.Printf("Warning: image preprocessing failed: %v, using original image", err)
-			processedImage = imagePath
-		}
-		imagePaths[i] = processedImage
-	}
+	// 	if err := preprocessCmd.Run(); err != nil {
+	// 		log.Printf("Warning: image preprocessing failed: %v, using original image", err)
+	// 		processedImage = imagePath
+	// 	}
+	// 	imagePaths[i] = processedImage
+	// }
 
 	return imagePaths, nil
 }

@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"github.com/remiehneppo/be-task-management/internal/service"
-	"github.com/remiehneppo/be-task-management/types"
 	"github.com/spf13/cobra"
 )
 
@@ -40,11 +39,7 @@ to quickly create a Cobra application.`,
 			panic(err)
 		}
 		fmt.Println("total pages", totalPages)
-		chunks, err := pdfService.ProcessPDF(filePath, types.UploadRequest{
-			Title:  "test",
-			Source: "test",
-			Tags:   []string{"test"},
-		})
+		chunks, err := pdfService.ProcessPDF(filePath)
 		if err != nil {
 			panic(err)
 		}

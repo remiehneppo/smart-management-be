@@ -25,22 +25,26 @@ type FileService interface {
 type fileService struct {
 	uploadDir        string
 	maxSize          int64
-	allowedTypes     []string
 	fileMetadataRepo repository.FileMetadataRepository
 }
 
-func NewFileService(uploadDir string) *fileService {
+func NewFileService(uploadDir string, maxSize int64, fileMetadataRepo repository.FileMetadataRepository) *fileService {
+	// Ensure the upload directory exists
+	if _, err := os.Stat(uploadDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(uploadDir, os.ModePerm); err != nil {
+			panic("failed to create upload directory: " + err.Error())
+		}
+	}
 	return &fileService{
-		uploadDir: uploadDir,
+		uploadDir:        uploadDir,
+		maxSize:          maxSize,
+		fileMetadataRepo: fileMetadataRepo,
 	}
 }
 
 func (f *fileService) UploadFile(ctx context.Context, req types.UploadFileRequest) (*types.UploadFileResponse, error) {
 	// Validate file extension
 	ext := strings.ToLower(filepath.Ext(req.FileHeader.Filename))
-	if !f.isAllowedType(ext) {
-		return nil, types.ErrUnsupportedFileType
-	}
 	// Validate file size
 	if req.FileHeader.Size > f.maxSize {
 		return nil, types.ErrFileTooLarge
@@ -83,13 +87,4 @@ func (f *fileService) UploadFile(ctx context.Context, req types.UploadFileReques
 		FileName: req.FileName,
 		FilePath: filePath,
 	}, nil
-}
-
-func (f *fileService) isAllowedType(ext string) bool {
-	for _, allowedType := range f.allowedTypes {
-		if strings.EqualFold(ext, allowedType) {
-			return true
-		}
-	}
-	return false
 }
