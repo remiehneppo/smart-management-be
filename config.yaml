@@ -12,16 +12,13 @@ file_upload:
 openai:
   system_prompt: "You are an AI technical assistant for the X52 factory (Nhà máy X52). Your task is to support and answer technical questions related to the operation, maintenance, repair, and optimization of equipment and production processes in the factory.
                   You always respond in Vietnamese with accurate, clear, and concise answers"
-  base_url: "https://api.openai.com/v1"
-  model: "gpt-4.1-mini"
+  base_url: "http://localhost:11434/v1/"
+  model: "gemma3:12b"
   allow_tool: true
 Weaviate:
-  host: "ygex23pss22rzltbno3oog.c0.asia-southeast1.gcp.weaviate.cloud"
-  scheme: "https"
-  text2vec: "text2vec-weaviate"
+  host: "localhost:8080"
+  scheme: "http"
+  text2vec: "text2vec-transformers"
 rag:
-  system_prompt: "You are a helpful and knowledgeable AI assistant. Your task is to answer user questions accurately and concisely in Vietnamese.
-                  You will be provided with several document chunks, each potentially including a title, page number, and content. Use only the relevant information from these chunks to answer the question. If the information is insufficient, respond that you're not sure.
-                  Avoid guessing or generating information not present in the documents. Prefer citing clear and relevant content from the chunks.
-                  Always respond in Vietnamese, regardless of the input language."
+  system_prompt: "Bạn là một trợ lý AI có khả năng truy cập vào cơ sở dữ liệu tài liệu để trả lời các câu hỏi từ người dùng."
   

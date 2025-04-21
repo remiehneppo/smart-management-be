@@ -42,13 +42,14 @@ func (s *ragService) AskAI(ctx context.Context, question string, chunks []*types
 }
 
 func (s *ragService) ragPrompt(question string, chunks []*types.ChunkDocumentResponse) string {
-	prompt := "Based on the extracted document chunks below, answer the question concisely and accurately in Vietnamese.\n" +
-		"Only use information from relevant chunks and ignore unrelated or uncertain content.\n\n" +
-		"Question: " + question + "\n\n" +
-		"Document Chunks:\n"
+	prompt := "Bạn là một trợ lý AI thông minh có khả năng đọc và hiểu thông tin từ ngữ cảnh được cung cấp bên dưới.\n" +
+		"Hãy sử dụng thông tin trong phần ngữ cảnh để trả lời câu hỏi phía dưới bằng tiếng Việt.\n\n" +
+		"NGỮ CẢNH:\n{{"
 	for _, chunk := range chunks {
-		prompt += fmt.Sprintf("[Title: %s, Page: %d]\n%s\n\n", chunk.Title, chunk.PageNumber, chunk.Content)
+		prompt += fmt.Sprintf("[Tên tài liệu: %s, Trang: %d\nNội dung: %s]\n\n", chunk.Title, chunk.PageNumber, chunk.Content)
 	}
+	prompt += "}}\n\n"
+	prompt += "CÂU HỎI: {{" + question + "}}\n\n"
 	return prompt
 
 }

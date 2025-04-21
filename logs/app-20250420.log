@@ -1,0 +1,112 @@
+time="2025-04-20 18:27:06" level=info msg="Connecting to database..."
+time="2025-04-20 18:38:58" level=info msg="Connecting to database..."
+time="2025-04-20 18:38:58" level=info msg="Database connected successfully"
+time="2025-04-20 18:39:00" level=info msg="Weaviate live status: true"
+time="2025-04-20 18:39:35" level=info msg="Connecting to database..."
+time="2025-04-20 18:39:35" level=info msg="Database connected successfully"
+time="2025-04-20 18:39:35" level=info msg="Weaviate live status: true"
+time="2025-04-20 18:39:35" level=info msg="Server starting on port 8088"
+time="2025-04-20 18:40:54" level=info msg="GET /swagger/index.html 200 1.439985ms" client_ip="::1" latency=1.439985ms method=GET path=/swagger/index.html status=200
+time="2025-04-20 18:40:55" level=info msg="GET /swagger/swagger-ui.css 200 177.345µs" client_ip="::1" latency="177.345µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-04-20 18:40:55" level=info msg="GET /swagger/swagger-ui-bundle.js 200 481.641µs" client_ip="::1" latency="481.641µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-04-20 18:40:55" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 312.591µs" client_ip="::1" latency="312.591µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-04-20 18:40:55" level=info msg="GET /swagger/favicon-32x32.png 200 31.933µs" client_ip="::1" latency="31.933µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-04-20 18:40:55" level=info msg="GET /swagger/doc.json 200 514.823µs" client_ip="::1" latency="514.823µs" method=GET path=/swagger/doc.json status=200
+time="2025-04-20 18:41:04" level=warning msg="POST /api/v1/auth/login 401 2.193114ms" client_ip="::1" latency=2.193114ms method=POST path=/api/v1/auth/login status=401
+time="2025-04-20 18:42:52" level=info msg="Starting graceful shutdown..."
+time="2025-04-20 18:42:52" level=info msg="Disconnecting from database..."
+time="2025-04-20 18:42:52" level=info msg="Graceful shutdown completed"
+time="2025-04-20 18:43:02" level=info msg="Connecting to database..."
+time="2025-04-20 18:43:02" level=info msg="Database connected successfully"
+time="2025-04-20 18:43:02" level=info msg="Weaviate live status: true"
+time="2025-04-20 18:43:02" level=info msg="Server starting on port 8088"
+time="2025-04-20 18:43:19" level=info msg="POST /api/v1/auth/login 200 1.120453ms" client_ip="::1" latency=1.120453ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-20 18:44:23" level=warning msg="POST /api/v1/documents/upload 400 88.84421ms" client_ip="::1" latency=88.84421ms method=POST path=/api/v1/documents/upload status=400
+time="2025-04-20 18:51:35" level=info msg="POST /api/v1/documents/upload 200 7m2.642400983s" client_ip="::1" latency=7m2.642400983s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 18:55:19" level=info msg="POST /api/v1/documents/ask-ai 200 45.946075738s" client_ip="::1" latency=45.946075738s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 18:55:50" level=info msg="POST /api/v1/documents/search 200 17.619002ms" client_ip="::1" latency=17.619002ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 18:59:59" level=info msg="POST /api/v1/documents/upload 200 2m12.439164363s" client_ip="::1" latency=2m12.439164363s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 19:12:05" level=info msg="POST /api/v1/documents/upload 200 1m10.786213609s" client_ip="::1" latency=1m10.786213609s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 19:13:11" level=info msg="Starting graceful shutdown..."
+time="2025-04-20 19:13:11" level=info msg="Disconnecting from database..."
+time="2025-04-20 19:13:11" level=info msg="Graceful shutdown completed"
+time="2025-04-20 19:14:26" level=info msg="Connecting to database..."
+time="2025-04-20 19:14:26" level=info msg="Database connected successfully"
+time="2025-04-20 19:14:26" level=info msg="Weaviate live status: true"
+time="2025-04-20 19:14:26" level=info msg="Server starting on port 8088"
+time="2025-04-20 19:14:43" level=info msg="POST /api/v1/documents/search 200 18.07883ms" client_ip="::1" latency=18.07883ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 19:15:33" level=info msg="POST /api/v1/documents/ask-ai 200 25.746969999s" client_ip="::1" latency=25.746969999s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 19:15:58" level=info msg="POST /api/v1/documents/ask-ai 200 2.713284337s" client_ip="::1" latency=2.713284337s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 19:17:29" level=info msg="POST /api/v1/documents/ask-ai 200 9.623748299s" client_ip="::1" latency=9.623748299s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 19:23:20" level=info msg="POST /api/v1/documents/upload 200 3m37.77009086s" client_ip="::1" latency=3m37.77009086s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 20:40:29" level=info msg="Connecting to database..."
+time="2025-04-20 20:40:29" level=info msg="Database connected successfully"
+time="2025-04-20 20:47:05" level=info msg="Connecting to database..."
+time="2025-04-20 20:47:05" level=info msg="Database connected successfully"
+time="2025-04-20 20:47:09" level=info msg="Connecting to database..."
+time="2025-04-20 20:47:09" level=info msg="Database connected successfully"
+time="2025-04-20 20:47:09" level=info msg="Weaviate live status: true"
+time="2025-04-20 20:47:09" level=info msg="Server starting on port 8088"
+time="2025-04-20 20:59:40" level=info msg="OPTIONS /api/v1/auth/login 200 790.676µs" client_ip="::1" latency="790.676µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-04-20 20:59:40" level=info msg="POST /api/v1/auth/login 200 2.681776ms" client_ip="::1" latency=2.681776ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-20 20:59:52" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.09µs" client_ip="::1" latency="5.09µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:00:05" level=info msg="POST /api/v1/assistant/chat-stateless 200 13.002885725s" client_ip="::1" latency=13.002885725s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:00:12" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.443µs" client_ip="::1" latency="5.443µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:00:17" level=info msg="POST /api/v1/assistant/chat-stateless 200 4.184449439s" client_ip="::1" latency=4.184449439s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:00:35" level=info msg="OPTIONS /api/v1/documents/search 200 5.592µs" client_ip="::1" latency="5.592µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-20 21:00:35" level=info msg="POST /api/v1/documents/search 200 579.7193ms" client_ip="::1" latency=579.7193ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 21:00:55" level=info msg="OPTIONS /api/v1/documents/search 200 4.445µs" client_ip="::1" latency="4.445µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-20 21:00:55" level=info msg="POST /api/v1/documents/search 200 164.596976ms" client_ip="::1" latency=164.596976ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 21:01:23" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 6.656µs" client_ip="::1" latency="6.656µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:01:44" level=info msg="POST /api/v1/documents/ask-ai 200 20.96639245s" client_ip="::1" latency=20.96639245s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:02:15" level=info msg="OPTIONS /api/v1/documents/search 200 5.258µs" client_ip="::1" latency="5.258µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-20 21:02:15" level=info msg="POST /api/v1/documents/search 200 215.348966ms" client_ip="::1" latency=215.348966ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 21:02:33" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 6.848µs" client_ip="::1" latency="6.848µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:02:56" level=info msg="POST /api/v1/documents/ask-ai 200 22.903238305s" client_ip="::1" latency=22.903238305s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:04:47" level=info msg="Starting graceful shutdown..."
+time="2025-04-20 21:04:47" level=info msg="Disconnecting from database..."
+time="2025-04-20 21:04:47" level=info msg="Graceful shutdown completed"
+time="2025-04-20 21:04:49" level=info msg="Connecting to database..."
+time="2025-04-20 21:04:49" level=info msg="Database connected successfully"
+time="2025-04-20 21:04:49" level=info msg="Weaviate live status: true"
+time="2025-04-20 21:04:49" level=info msg="Server starting on port 8088"
+time="2025-04-20 21:04:52" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 32.168µs" client_ip="::1" latency="32.168µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:04:54" level=info msg="POST /api/v1/documents/ask-ai 200 1.923778582s" client_ip="::1" latency=1.923778582s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:05:06" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 4.961µs" client_ip="::1" latency="4.961µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:05:06" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 10.373842ms" client_ip="::1" latency=10.373842ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:05:19" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 4.072µs" client_ip="::1" latency="4.072µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:05:19" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 3.217833ms" client_ip="::1" latency=3.217833ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:05:26" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.779µs" client_ip="::1" latency="4.779µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:05:37" level=info msg="POST /api/v1/documents/ask-ai 200 10.369541893s" client_ip="::1" latency=10.369541893s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:06:16" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 5.132µs" client_ip="::1" latency="5.132µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:06:26" level=info msg="POST /api/v1/documents/ask-ai 200 10.319486221s" client_ip="::1" latency=10.319486221s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:06:47" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 5.443µs" client_ip="::1" latency="5.443µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:06:52" level=info msg="POST /api/v1/documents/ask-ai 200 5.179185175s" client_ip="::1" latency=5.179185175s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:07:11" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 5.116µs" client_ip="::1" latency="5.116µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:07:11" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 2.642834ms" client_ip="::1" latency=2.642834ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:08:28" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 6.059µs" client_ip="::1" latency="6.059µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:08:31" level=info msg="POST /api/v1/documents/ask-ai 200 2.548334714s" client_ip="::1" latency=2.548334714s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:08:47" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.858µs" client_ip="::1" latency="4.858µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:08:54" level=info msg="POST /api/v1/documents/ask-ai 200 7.520833951s" client_ip="::1" latency=7.520833951s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:09:14" level=info msg="OPTIONS /api/v1/documents/search 200 7.033µs" client_ip="::1" latency="7.033µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-04-20 21:09:14" level=info msg="POST /api/v1/documents/search 200 353.337348ms" client_ip="::1" latency=353.337348ms method=POST path=/api/v1/documents/search status=200
+time="2025-04-20 21:09:28" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 4.793µs" client_ip="::1" latency="4.793µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:09:28" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 3.316962ms" client_ip="::1" latency=3.316962ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:09:44" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 4.283µs" client_ip="::1" latency="4.283µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:09:44" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 2.91215ms" client_ip="::1" latency=2.91215ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:10:03" level=info msg="OPTIONS /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 4.426µs" client_ip="::1" latency="4.426µs" method=OPTIONS path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:10:03" level=info msg="GET /api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf 200 3.1235ms" client_ip="::1" latency=3.1235ms method=GET path="/api/v1/documents/view?path=Cau+truc+du+lieu+va+giai+thuat.pdf" status=200
+time="2025-04-20 21:12:14" level=warning msg="POST /api/v1/documents/upload 401 40.062µs" client_ip="::1" latency="40.062µs" method=POST path=/api/v1/documents/upload status=401
+time="2025-04-20 21:12:31" level=info msg="POST /api/v1/auth/login 200 1.199147ms" client_ip="::1" latency=1.199147ms method=POST path=/api/v1/auth/login status=200
+time="2025-04-20 21:13:07" level=info msg="POST /api/v1/documents/upload 200 14.60394901s" client_ip="::1" latency=14.60394901s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 21:15:33" level=warning msg="POST /api/v1/documents/upload 400 68.459036ms" client_ip="::1" latency=68.459036ms method=POST path=/api/v1/documents/upload status=400
+time="2025-04-20 21:17:13" level=info msg="POST /api/v1/documents/upload 200 1m32.619008683s" client_ip="::1" latency=1m32.619008683s method=POST path=/api/v1/documents/upload status=200
+time="2025-04-20 21:17:32" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 19.209µs" client_ip="::1" latency="19.209µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:17:52" level=info msg="POST /api/v1/documents/ask-ai 200 20.296583533s" client_ip="::1" latency=20.296583533s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-04-20 21:18:43" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.567µs" client_ip="::1" latency="5.567µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:18:55" level=info msg="POST /api/v1/assistant/chat-stateless 200 11.896984979s" client_ip="::1" latency=11.896984979s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:19:44" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.306µs" client_ip="::1" latency="5.306µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:20:01" level=info msg="POST /api/v1/assistant/chat-stateless 200 16.384247429s" client_ip="::1" latency=16.384247429s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-04-20 21:24:44" level=info msg="Starting graceful shutdown..."
+time="2025-04-20 21:24:44" level=info msg="Disconnecting from database..."
+time="2025-04-20 21:24:44" level=info msg="Graceful shutdown completed"
