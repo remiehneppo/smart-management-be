@@ -21,8 +21,8 @@ import (
 
 type PDFService interface {
 	GetTotalPages(filePath string) (int, error)
-	ProcessPDF(filePath string) ([]*types.DocumentChunk, error)
-	ExtractAllText(filePath string) ([]string, error)
+	ProcessPDF(req *types.ProcessPDFRequest) ([]*types.DocumentChunk, error)
+	ExtractPageContent(req *types.ExtractPageContentRequest) ([]string, error)
 }
 
 type DocumentServiceConfig struct {
@@ -83,17 +83,22 @@ func (s *pdfService) GetTotalPages(filePath string) (int, error) {
 // Returns:
 //   - []*types.DocumentChunk: List of document chunks
 //   - error: Error if processing fails
-func (s *pdfService) ProcessPDF(filePath string) ([]*types.DocumentChunk, error) {
+func (s *pdfService) ProcessPDF(req *types.ProcessPDFRequest) ([]*types.DocumentChunk, error) {
 	chunks := make([]*types.DocumentChunk, 0)
 
 	// Get total pages
-	totalPages, err := s.GetTotalPages(filePath)
+	totalPages, err := s.GetTotalPages(req.FilePath)
 	if err != nil {
 		return nil, err
 	}
-
 	// Extract all text from the PDF
-	texts, err := s.ExtractAllText(filePath)
+	texts, err := s.ExtractPageContent(&types.ExtractPageContentRequest{
+		FilePath: req.FilePath,
+		ToolUse:  req.ToolUse,
+		FromPage: 1,
+		ToPage:   totalPages,
+	},
+	)
 	if err != nil {
 		return nil, types.ErrFailedExtractTextFromPDF
 	}
@@ -151,7 +156,7 @@ func (s *pdfService) createTempDir(pdfPath string) (string, error) {
 // Returns:
 //   - []string: Paths to generated image files
 //   - error: Error if conversion fails
-func (s *pdfService) convertPDFToImages(pdfPath string, outputDir string) ([]string, error) {
+func (s *pdfService) convertPDFToImages(pdfPath string, outputDir string, fromPage int, toPage int) ([]string, error) {
 	// Create temp directory if outputDir not specified
 	if outputDir == "" {
 		if _, err := os.Stat("temp"); os.IsNotExist(err) {
@@ -172,15 +177,26 @@ func (s *pdfService) convertPDFToImages(pdfPath string, outputDir string) ([]str
 			}
 		}
 	}
-
+	var convertCmd *exec.Cmd
 	// Convert PDF to images using pdftoppm
-	convertCmd := exec.Command("pdftoppm",
-		"-png",
-		"-r", "300",
-		"-hide-annotations",
-		pdfPath,
-		filepath.Join(outputDir, "page"))
-
+	if fromPage > 0 && toPage > 0 {
+		convertCmd = exec.Command("pdftoppm",
+			"-png",
+			"-r", "450",
+			"-f", strconv.Itoa(fromPage),
+			"-l", strconv.Itoa(toPage),
+			"-hide-annotations",
+			pdfPath,
+			filepath.Join(outputDir, "page"))
+	} else {
+		// Convert all pages
+		convertCmd = exec.Command("pdftoppm",
+			"-png",
+			"-r", "450",
+			"-hide-annotations",
+			pdfPath,
+			filepath.Join(outputDir, "page"))
+	}
 	var stderr bytes.Buffer
 	convertCmd.Stderr = &stderr
 
@@ -224,43 +240,58 @@ func (s *pdfService) convertPDFToImages(pdfPath string, outputDir string) ([]str
 	return imagePaths, nil
 }
 
-// ExtractAllText extracts text from all pages of a PDF
+// ExtractPageContent extracts text from all pages of a PDF
 // Parameters:
 //   - filePath: Path to the PDF file
 //
 // Returns:
 //   - []string: Extracted text for each page
 //   - error: Error if extraction fails
-func (s *pdfService) ExtractAllText(filePath string) ([]string, error) {
-	totalPages, err := s.GetTotalPages(filePath)
+func (s *pdfService) ExtractPageContent(req *types.ExtractPageContentRequest) ([]string, error) {
+	totalPages, err := s.GetTotalPages(req.FilePath)
+	if req.FromPage < 1 || req.ToPage > totalPages || req.FromPage > req.ToPage {
+		return nil, fmt.Errorf("invalid page range: %d-%d", req.FromPage, req.ToPage)
+	}
+	results := make([]string, req.ToPage-req.FromPage+1)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get total pages: %w", err)
 	}
-	tempDir, err := s.createTempDir(filePath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create temp directory: %w", err)
-	}
-	defer os.RemoveAll(tempDir)
-
-	imagePaths, err := s.convertPDFToImages(filePath, tempDir)
-	if err != nil {
-		return nil, fmt.Errorf("failed to convert PDF to images: %w", err)
-	}
-
-	results := make([]string, totalPages)
-
-	for batchStart := 0; batchStart < len(imagePaths); batchStart += s.batchSize {
-		batchEnd := batchStart + s.batchSize
-		if batchEnd > len(imagePaths) {
-			batchEnd = len(imagePaths)
-		}
-
-		log.Printf("Processing batch %d-%d of %d pages", batchStart+1, batchEnd, len(imagePaths))
-
-		err := s.processPageBatch(imagePaths[batchStart:batchEnd], batchStart, results)
+	if req.ToolUse == "ocr" {
+		tempDir, err := s.createTempDir(req.FilePath)
 		if err != nil {
-			return nil, fmt.Errorf("error processing batch %d-%d: %w", batchStart+1, batchEnd, err)
+			return nil, fmt.Errorf("failed to create temp directory: %w", err)
 		}
+		defer os.RemoveAll(tempDir)
+
+		imagePaths, err := s.convertPDFToImages(req.FilePath, tempDir, req.FromPage, req.ToPage)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert PDF to images: %w", err)
+		}
+
+		for batchStart := 0; batchStart < len(imagePaths); batchStart += s.batchSize {
+			batchEnd := batchStart + s.batchSize
+			if batchEnd > len(imagePaths) {
+				batchEnd = len(imagePaths)
+			}
+
+			log.Printf("Processing batch %d-%d of %d pages", batchStart+1, batchEnd, len(imagePaths))
+
+			err := s.processPageBatch(imagePaths[batchStart:batchEnd], batchStart, results)
+			if err != nil {
+				return nil, fmt.Errorf("error processing batch %d-%d: %w", batchStart+1, batchEnd, err)
+			}
+		}
+	} else if req.ToolUse == "pdftotext" {
+
+		for i := req.FromPage - 1; i < req.ToPage; i++ {
+			text, err := s.extractTextWithPdftotext(req.FilePath, i+1)
+			if err != nil {
+				return nil, fmt.Errorf("failed to extract text from page %d: %w", i+1, err)
+			}
+			results[i] = text
+		}
+	} else {
+		return nil, fmt.Errorf("unsupported tool: %s", req.ToolUse)
 	}
 
 	return results, nil
@@ -293,7 +324,7 @@ func (s *pdfService) processPageBatch(imagePaths []string, startIndex int, resul
 				time.Sleep(100 * time.Millisecond)
 			}
 
-			text, err := s.extractText(imgPath)
+			text, err := s.extractTextWithTesseract(imgPath)
 			if err != nil {
 				log.Printf("Warning: failed to extract text from page %d: %v", pageNum+1, err)
 				return
@@ -327,12 +358,8 @@ func (s *pdfService) processPageBatch(imagePaths []string, startIndex int, resul
 // Returns:
 //   - string: Extracted text
 //   - error: Error if extraction fails
-func (s *pdfService) extractText(imgPath string) (string, error) {
-	text, err := s.extractTextWithTesseract(imgPath)
-	if err != nil {
-		return "", fmt.Errorf("failed to extract text: %w", err)
-	}
-	return text, nil
+func (s *pdfService) extractText() (string, error) {
+	return "", nil
 }
 
 // createChunks splits text into overlapping chunks with proper sentence boundaries
@@ -462,12 +489,12 @@ func (s *pdfService) extractTextWithTesseract(imgPath string) (string, error) {
 	ocrCmd := exec.Command("tesseract",
 		imgPath,
 		"stdout",
-		"-l", "vie+rus+eng",
+		"-l", "vie+rus",
 		"--oem", "3",
 		"--psm", "3",
-		"--dpi", "300",
-		"-c", "textord_min_linesize=2.5",
-		"-c", "preserve_interword_spaces=1",
+		"--dpi", "450",
+		// "-c", "textord_min_linesize=2.5",
+		// "-c", "preserve_interword_spaces=1",
 	)
 
 	var ocrOut bytes.Buffer
@@ -510,4 +537,37 @@ func (s *pdfService) cleanText(text string) string {
 	cleaned = strings.TrimSpace(cleaned)
 
 	return cleaned
+}
+
+// extractTextWithPdftotext extracts text from a specific page of a PDF using pdftotext
+// Parameters:
+//   - filePath: Path to the PDF file
+//   - pageNum: Page number to extract text from
+//
+// Returns:
+//   - string: Extracted text
+//   - error: Error if extraction fails
+func (s *pdfService) extractTextWithPdftotext(filePath string, pageNum int) (string, error) {
+	// Validate page number
+	if pageNum < 1 {
+		return "", fmt.Errorf("invalid page number: %d", pageNum)
+	}
+
+	// Construct the command to extract text from a specific page
+	cmd := exec.Command("pdftotext", "-f", strconv.Itoa(pageNum), "-l", strconv.Itoa(pageNum), filePath, "-")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	// Run the command
+	if err := cmd.Run(); err != nil {
+		return "", fmt.Errorf("failed to run pdftotext: %w", err)
+	}
+
+	// Get the extracted text
+	text := out.String()
+	if trimmed := strings.TrimSpace(text); len(trimmed) > 0 {
+		return trimmed, nil
+	}
+
+	return "", nil
 }

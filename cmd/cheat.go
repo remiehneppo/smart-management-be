@@ -4,11 +4,10 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 
 	"github.com/remiehneppo/be-task-management/internal/service"
+	"github.com/remiehneppo/be-task-management/types"
 	"github.com/spf13/cobra"
 )
 
@@ -26,34 +25,21 @@ to quickly create a Cobra application.`,
 		fmt.Println("cheat called")
 		pdfService := service.NewPDFService(service.DefaultDocumentServiceConfig)
 
-		// write to a text file
-		outputFile, err := os.Create("out.json")
+		pages, err := pdfService.ExtractPageContent(&types.ExtractPageContentRequest{
+			ToolUse:  "pdftotext",
+			FilePath: "./test_data/ShipDesign.pdf",
+			FromPage: 1,
+			ToPage:   10,
+		})
+
 		if err != nil {
-			fmt.Println("Error creating output file:", err)
+			fmt.Println("Error extracting pages:", err)
 			return
 		}
-		defer outputFile.Close()
-		filePath := "./test_data/cong_nghe_dong_va_sua_chua_tau_thuy.pdf"
-		totalPages, err := pdfService.GetTotalPages(filePath)
-		if err != nil {
-			panic(err)
+		for _, page := range pages {
+			fmt.Println("Page content:", page)
 		}
-		fmt.Println("total pages", totalPages)
-		chunks, err := pdfService.ProcessPDF(filePath)
-		if err != nil {
-			panic(err)
-		}
-		outputFile.WriteString("[\n")
-		for _, chunk := range chunks {
-			jsonData, err := json.MarshalIndent(chunk, "", "  ")
-			if err != nil {
-				fmt.Println("Error marshalling chunk to JSON:", err)
-				return
-			}
-			outputFile.Write(jsonData)
-			outputFile.WriteString(",\n")
-		}
-		outputFile.WriteString("]\n")
+		// Example of using the PDF service to extract text from a PDF file
 
 	},
 }

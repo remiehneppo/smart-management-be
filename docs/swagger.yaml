@@ -97,6 +97,13 @@ definitions:
     required:
     - report_id
     type: object
+  types.DemoGetTextResponse:
+    properties:
+      pages:
+        items:
+          type: string
+        type: array
+    type: object
   types.FeedbackRequest:
     properties:
       feedback:
@@ -429,6 +436,45 @@ paths:
       security:
       - BearerAuth: []
       summary: Ask AI a question
+      tags:
+      - documents
+  /documents/demo-load-text:
+    post:
+      consumes:
+      - application/json
+      description: Loads text from a PDF document for demonstration purposes
+      parameters:
+      - description: PDF file to load text from
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Document metadata in JSON format
+        in: formData
+        name: metadata
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Text loaded successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.DemoGetTextResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      summary: Demo load text from a PDF document
       tags:
       - documents
   /documents/search:

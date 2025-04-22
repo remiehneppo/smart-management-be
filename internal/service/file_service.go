@@ -10,6 +10,7 @@ import (
 
 	"github.com/remiehneppo/be-task-management/internal/repository"
 	"github.com/remiehneppo/be-task-management/types"
+	"github.com/remiehneppo/be-task-management/utils"
 )
 
 var _ FileService = (*fileService)(nil)
@@ -52,7 +53,8 @@ func (f *fileService) UploadFile(ctx context.Context, req types.UploadFileReques
 	}
 	// Set default file name if not provided
 	if req.FileName == "" {
-		req.FileName = req.FileHeader.Filename
+		req.FileName = utils.GetFileNameWithoutExt(req.FileHeader.Filename)
+
 	}
 	// Ensure the file name has the correct extension
 	if filepath.Ext(req.FileName) != ext {

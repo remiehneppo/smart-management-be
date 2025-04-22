@@ -16,6 +16,7 @@ type DocumentHandler interface {
 	SearchDocument(ctx *gin.Context)
 	AskAI(ctx *gin.Context)
 	ViewDocument(ctx *gin.Context)
+	DemoloadText(ctx *gin.Context)
 }
 
 type documentHandler struct {
@@ -71,7 +72,7 @@ func (h *documentHandler) UploadPDF(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(500, types.Response{
 			Status:  false,
-			Message: "Internal server error",
+			Message: err.Error(),
 		})
 		return
 	}
@@ -198,4 +199,56 @@ func (h *documentHandler) ViewDocument(ctx *gin.Context) {
 		return
 	}
 
+}
+
+// DemoloadText godoc
+// @Summary Demo load text from a PDF document
+// @Description Loads text from a PDF document for demonstration purposes
+// @Tags documents
+// @Accept json
+// @Produce json
+// @Param file formData file true "PDF file to load text from"
+// @Param metadata formData string true "Document metadata in JSON format"
+// @Success 200 {object} types.Response{data=types.DemoGetTextResponse} "Text loaded successfully"
+// @Failure 400 {object} types.Response "Invalid request"
+// @Failure 500 {object} types.Response "Internal server error"
+// @Router /documents/demo-load-text [post]
+func (h *documentHandler) DemoloadText(ctx *gin.Context) {
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "File upload error",
+		})
+		return
+	}
+	metadata := ctx.PostForm("metadata")
+	if metadata == "" {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "Invalid request: missing metadata",
+		})
+		return
+	}
+	var req types.DemoGetTextRequest
+	if err := json.Unmarshal([]byte(metadata), &req); err != nil {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "Invalid metadata format",
+		})
+		return
+	}
+	res, err := h.documentService.DemoGetText(ctx, &req, file)
+	if err != nil {
+		ctx.JSON(500, types.Response{
+			Status:  false,
+			Message: "Internal server error",
+		})
+		return
+	}
+	ctx.JSON(200, types.Response{
+		Status:  true,
+		Message: "Text loaded successfully",
+		Data:    res,
+	})
 }

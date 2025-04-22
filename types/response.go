@@ -84,3 +84,7 @@ type AskAIResponse struct {
 type ViewDocumentResponse struct {
 	Document *os.File `json:"document"`
 }
+
+type DemoGetTextResponse struct {
+	Pages []string `json:"pages"`
+}

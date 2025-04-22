@@ -244,6 +244,7 @@ func (a *App) RegisterHandler() {
 	aiAssistantGroup.POST("/chat", aiAssistantHandler.ChatWithAssistant)
 	aiAssistantGroup.POST("/chat-stateless", aiAssistantHandler.ChatWithAssistantStateless)
 
+	a.api.POST("/api/v1/documents/demo-load-text", documentHandler.DemoloadText)
 	documentGroup := a.api.Group("/api/v1/documents")
 	documentGroup.Use(authMiddleware.AuthBearerMiddleware())
 	documentGroup.POST("/upload", documentHandler.UploadPDF)

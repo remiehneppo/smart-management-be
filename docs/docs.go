@@ -306,6 +306,69 @@ const docTemplate = `{
                 }
             }
         },
+        "/documents/demo-load-text": {
+            "post": {
+                "description": "Loads text from a PDF document for demonstration purposes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Demo load text from a PDF document",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "PDF file to load text from",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Document metadata in JSON format",
+                        "name": "metadata",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Text loaded successfully",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/types.DemoGetTextResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/types.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/types.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/documents/search": {
             "post": {
                 "security": [
@@ -1427,6 +1490,17 @@ const docTemplate = `{
             "properties": {
                 "report_id": {
                     "type": "string"
+                }
+            }
+        },
+        "types.DemoGetTextResponse": {
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },

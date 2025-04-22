@@ -90,8 +90,9 @@ type UploadFileRequest struct {
 }
 
 type UploadDocumentRequest struct {
-	Title string   `json:"title" binding:"required"`
-	Tags  []string `json:"tags" binding:"required"`
+	Title   string   `json:"title" binding:"required"`
+	Tags    []string `json:"tags" binding:"required"`
+	ToolUse string   `json:"tool_use" binding:"required"`
 }
 
 type SearchDocumentRequest struct {
@@ -111,4 +112,22 @@ type AskAIRequest struct {
 
 type ViewDocumentRequest struct {
 	FilePath string `json:"file_path" binding:"required"`
+}
+
+type DemoGetTextRequest struct {
+	ToolUse  string `json:"tool_use" binding:"required"`
+	FromPage int    `json:"from_page" binding:"required"`
+	ToPage   int    `json:"to_page" binding:"required"`
+}
+
+type ProcessPDFRequest struct {
+	ToolUse  string `json:"tool_use" binding:"required"`
+	FilePath string `json:"file_path" binding:"required"`
+}
+
+type ExtractPageContentRequest struct {
+	ToolUse  string `json:"tool_use" binding:"required"`
+	FilePath string `json:"file_path" binding:"required"`
+	FromPage int    `json:"from_page" binding:"required"`
+	ToPage   int    `json:"to_page" binding:"required"`
 }
