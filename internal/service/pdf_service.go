@@ -40,7 +40,7 @@ type pdfService struct {
 }
 
 var DefaultDocumentServiceConfig = DocumentServiceConfig{
-	MaxChunkSize: 1024,
+	MaxChunkSize: 2048,
 	OverlapSize:  128,
 	BatchSize:    3,
 }
@@ -288,7 +288,7 @@ func (s *pdfService) ExtractPageContent(req *types.ExtractPageContentRequest) ([
 			if err != nil {
 				return nil, fmt.Errorf("failed to extract text from page %d: %w", i+1, err)
 			}
-			results[i] = text
+			results[i-req.FromPage+1] = text
 		}
 	} else {
 		return nil, fmt.Errorf("unsupported tool: %s", req.ToolUse)
