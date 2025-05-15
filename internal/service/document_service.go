@@ -17,6 +17,7 @@ var _ DocumentService = (*documentService)(nil)
 
 type DocumentService interface {
 	UploadDocument(ctx context.Context, req *types.UploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.UploadDocumentResponse, error)
+	// BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error)
 	SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error)
 	AskAI(ctx context.Context, req *types.AskAIRequest) (*types.AskAIResponse, error)
 	ViewDocument(ctx context.Context, req *types.ViewDocumentRequest) (*types.ViewDocumentResponse, error)
@@ -89,6 +90,10 @@ func (s *documentService) UploadDocument(ctx context.Context, req *types.UploadD
 		FilePath: uploadFileRes.FilePath,
 	}, nil
 }
+
+// func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error) {
+
+// }
 
 func (s *documentService) SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error) {
 	queries := s.getQueries(req.Query)

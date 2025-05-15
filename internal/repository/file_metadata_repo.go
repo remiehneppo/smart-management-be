@@ -17,6 +17,7 @@ type FileMetadataRepository interface {
 	CreateFileMetadata(ctx context.Context, fileMetadata *types.FileMetadata) error
 	UpdateFileMetadata(ctx context.Context, fileMetadata *types.FileMetadata) error
 	DeleteFileMetadata(ctx context.Context, fileID string) error
+	GetFileByName(ctx context.Context, fileName string) (*types.FileMetadata, error)
 }
 
 type fileMetadataRepository struct {
@@ -76,4 +77,21 @@ func (r *fileMetadataRepository) DeleteFileMetadata(ctx context.Context, fileID 
 		return err
 	}
 	return nil
+}
+
+func (r *fileMetadataRepository) GetFileByName(ctx context.Context, fileName string) (*types.FileMetadata, error) {
+	filesMetadata := []*types.FileMetadata{}
+	err := r.database.Query(
+		ctx,
+		r.collection,
+		map[string]interface{}{"file_name": fileName},
+		0,
+		0,
+		nil,
+		filesMetadata,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return filesMetadata[0], nil
 }

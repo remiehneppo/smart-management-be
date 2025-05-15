@@ -131,3 +131,7 @@ type ExtractPageContentRequest struct {
 	FromPage int    `json:"from_page" binding:"required"`
 	ToPage   int    `json:"to_page" binding:"required"`
 }
+
+type BatchUploadDocumentRequest struct {
+	
+}
