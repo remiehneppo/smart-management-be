@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/remiehneppo/be-task-management/internal/repository"
 	"github.com/remiehneppo/be-task-management/types"
@@ -25,12 +26,13 @@ type DocumentService interface {
 }
 
 type documentService struct {
-	allowedTypes       []string
-	aiService          AIService
-	ragService         RAGService
-	fileService        FileService
-	pdfService         PDFService
-	documentVectorRepo repository.DocumentVectorRepository
+	allowedTypes        []string
+	aiService           AIService
+	ragService          RAGService
+	fileService         FileService
+	pdfService          PDFService
+	documentVectorRepo  repository.DocumentVectorRepository
+	pendingDocumentRepo repository.PendingDocumentRepository
 }
 
 func NewDocumentService(
@@ -39,15 +41,17 @@ func NewDocumentService(
 	fileService FileService,
 	pdfService PDFService,
 	documentVectorRepo repository.DocumentVectorRepository,
+	pendingDocumentRepo repository.PendingDocumentRepository,
 	allowedTypes []string,
 ) *documentService {
 	return &documentService{
-		aiService:          aiService,
-		ragService:         ragService,
-		fileService:        fileService,
-		pdfService:         pdfService,
-		documentVectorRepo: documentVectorRepo,
-		allowedTypes:       allowedTypes,
+		aiService:           aiService,
+		ragService:          ragService,
+		fileService:         fileService,
+		pdfService:          pdfService,
+		documentVectorRepo:  documentVectorRepo,
+		pendingDocumentRepo: pendingDocumentRepo,
+		allowedTypes:        allowedTypes,
 	}
 }
 
@@ -91,9 +95,49 @@ func (s *documentService) UploadDocument(ctx context.Context, req *types.UploadD
 	}, nil
 }
 
-// func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error) {
+func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error) {
 
-// }
+	uploadStates := make([]*types.UploadStatus, 0)
+
+	for _, fileHeader := range req.Files {
+		uploadReq := types.UploadFileRequest{
+			FileName:   fileHeader.Filename,
+			FileHeader: fileHeader,
+		}
+		uploadRes, err := s.fileService.UploadFile(
+			ctx, uploadReq,
+		)
+		if err != nil {
+			uploadStates = append(uploadStates, &types.UploadStatus{
+				FileName: uploadReq.FileName,
+				Status:   false,
+				Message:  err.Error(),
+			})
+			continue
+		}
+		uploadStates = append(uploadStates, &types.UploadStatus{
+			FileName: uploadReq.FileName,
+			Status:   true,
+		})
+		pendingDocument := &types.PendingDocument{
+			DocumentPath: uploadRes.FilePath,
+			DocumentName: uploadReq.FileName,
+			CreatedAt:    time.Now().Unix(),
+		}
+		if err := s.pendingDocumentRepo.Save(ctx, pendingDocument); err != nil {
+			uploadStates = append(uploadStates, &types.UploadStatus{
+				FileName: uploadReq.FileName,
+				Status:   false,
+				Message:  err.Error(),
+			})
+			continue
+		}
+	}
+
+	return &types.BatchUploadDocumentResponse{
+		UploadStates: uploadStates,
+	}, nil
+}
 
 func (s *documentService) SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error) {
 	queries := s.getQueries(req.Query)

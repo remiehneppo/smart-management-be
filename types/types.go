@@ -157,8 +157,8 @@ type DocumentMetadata struct {
 }
 
 type PendingDocument struct {
-	ID            string `json:"id" bson:"_id,omitempty"`
-	DocumentID    string `json:"document_id" bson:"document_id"`
-	MethodProcess string `json:"method_process" bson:"method_process"`
-	CreatedAt     int64  `json:"created_at" bson:"created_at"`
+	ID           string `json:"id" bson:"_id,omitempty"`
+	DocumentPath string `json:"document_path" bson:"document_path"`
+	DocumentName string `json:"document_name" bson:"document_name"`
+	CreatedAt    int64  `json:"created_at" bson:"created_at"`
 }

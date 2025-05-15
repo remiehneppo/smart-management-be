@@ -54,6 +54,7 @@ type ChatResponse struct {
 }
 
 type UploadFileResponse struct {
+	FileId   string `json:"file_id"`
 	FilePath string `json:"file_path"`
 	FileName string `json:"file_name"`
 }
@@ -87,4 +88,14 @@ type ViewDocumentResponse struct {
 
 type DemoGetTextResponse struct {
 	Pages []string `json:"pages"`
+}
+
+type BatchUploadDocumentResponse struct {
+	UploadStates []*UploadStatus `json:"upload_state"`
+}
+
+type UploadStatus struct {
+	FileName string `json:"file_name"`
+	Status   bool   `json:"status"`
+	Message  string `json:"message"`
 }

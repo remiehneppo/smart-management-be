@@ -1,0 +1,50 @@
+time="2025-05-12 12:12:53" level=info msg="Connecting to database..."
+time="2025-05-12 12:12:53" level=info msg="Database connected successfully"
+time="2025-05-12 12:13:39" level=info msg="Connecting to database..."
+time="2025-05-12 12:13:39" level=info msg="Database connected successfully"
+time="2025-05-12 12:13:39" level=info msg="Weaviate live status: true"
+time="2025-05-12 12:13:39" level=info msg="Server starting on port 8088"
+time="2025-05-12 12:15:39" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 56.508µs" client_ip="::1" latency="56.508µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-05-12 12:15:39" level=warning msg="POST /api/v1/assistant/chat-stateless 401 215.415µs" client_ip="::1" latency="215.415µs" method=POST path=/api/v1/assistant/chat-stateless status=401
+time="2025-05-12 12:15:46" level=info msg="OPTIONS /api/v1/auth/login 200 4.087µs" client_ip="::1" latency="4.087µs" method=OPTIONS path=/api/v1/auth/login status=200
+time="2025-05-12 12:15:46" level=info msg="POST /api/v1/auth/login 200 6.555921ms" client_ip="::1" latency=6.555921ms method=POST path=/api/v1/auth/login status=200
+time="2025-05-12 12:15:56" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 5.961µs" client_ip="::1" latency="5.961µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-05-12 12:16:20" level=info msg="POST /api/v1/assistant/chat-stateless 200 25.702724189s" client_ip="::1" latency=25.702724189s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-05-12 12:16:45" level=info msg="Starting graceful shutdown..."
+time="2025-05-12 12:16:45" level=info msg="Disconnecting from database..."
+time="2025-05-12 12:16:45" level=info msg="Graceful shutdown completed"
+time="2025-05-12 12:16:47" level=info msg="Connecting to database..."
+time="2025-05-12 12:16:47" level=info msg="Database connected successfully"
+time="2025-05-12 12:16:47" level=info msg="Weaviate live status: true"
+time="2025-05-12 12:16:47" level=info msg="Server starting on port 8088"
+time="2025-05-12 12:17:38" level=info msg="OPTIONS /api/v1/assistant/chat-stateless 200 35.259µs" client_ip="::1" latency="35.259µs" method=OPTIONS path=/api/v1/assistant/chat-stateless status=200
+time="2025-05-12 12:17:45" level=info msg="POST /api/v1/assistant/chat-stateless 200 7.208474465s" client_ip="::1" latency=7.208474465s method=POST path=/api/v1/assistant/chat-stateless status=200
+time="2025-05-12 12:18:19" level=info msg="OPTIONS /api/v1/documents/search 200 6.321µs" client_ip="::1" latency="6.321µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:18:22" level=info msg="POST /api/v1/documents/search 200 2.251964446s" client_ip="::1" latency=2.251964446s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:18:56" level=info msg="OPTIONS /api/v1/documents/search 200 7.041µs" client_ip="::1" latency="7.041µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:18:58" level=info msg="POST /api/v1/documents/search 200 2.148525329s" client_ip="::1" latency=2.148525329s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:19:30" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.551µs" client_ip="::1" latency="4.551µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:19:44" level=info msg="POST /api/v1/documents/ask-ai 200 14.304850943s" client_ip="::1" latency=14.304850943s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:20:01" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 7.091µs" client_ip="::1" latency="7.091µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:20:15" level=info msg="POST /api/v1/documents/ask-ai 200 13.491689128s" client_ip="::1" latency=13.491689128s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:21:18" level=info msg="OPTIONS /api/v1/documents/search 200 7.845µs" client_ip="::1" latency="7.845µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:21:19" level=info msg="POST /api/v1/documents/search 200 1.236867642s" client_ip="::1" latency=1.236867642s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:21:41" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.575µs" client_ip="::1" latency="4.575µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:21:44" level=info msg="POST /api/v1/documents/ask-ai 200 3.277928491s" client_ip="::1" latency=3.277928491s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:22:11" level=info msg="OPTIONS /api/v1/documents/search 200 6.472µs" client_ip="::1" latency="6.472µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:22:16" level=info msg="POST /api/v1/documents/search 200 5.275045738s" client_ip="::1" latency=5.275045738s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:22:18" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 6.133µs" client_ip="::1" latency="6.133µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:22:22" level=info msg="POST /api/v1/documents/ask-ai 200 3.534890291s" client_ip="::1" latency=3.534890291s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:22:40" level=info msg="OPTIONS /api/v1/documents/search 200 8.031µs" client_ip="::1" latency="8.031µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:22:44" level=info msg="POST /api/v1/documents/search 200 4.398309675s" client_ip="::1" latency=4.398309675s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:22:46" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 5.913µs" client_ip="::1" latency="5.913µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:22:56" level=info msg="POST /api/v1/documents/ask-ai 200 11.717707181s" client_ip="::1" latency=11.717707181s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:23:18" level=info msg="OPTIONS /api/v1/documents/ask-ai 200 4.479µs" client_ip="::1" latency="4.479µs" method=OPTIONS path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:23:19" level=info msg="OPTIONS /api/v1/documents/search 200 28.101µs" client_ip="::1" latency="28.101µs" method=OPTIONS path=/api/v1/documents/search status=200
+time="2025-05-12 12:23:23" level=info msg="POST /api/v1/documents/search 200 4.324853007s" client_ip="::1" latency=4.324853007s method=POST path=/api/v1/documents/search status=200
+time="2025-05-12 12:23:23" level=info msg="POST /api/v1/documents/ask-ai 200 5.797806244s" client_ip="::1" latency=5.797806244s method=POST path=/api/v1/documents/ask-ai status=200
+time="2025-05-12 12:23:45" level=info msg="OPTIONS /api/v1/documents/view?path=Learning_Python.pdf 200 4.847µs" client_ip="::1" latency="4.847µs" method=OPTIONS path="/api/v1/documents/view?path=Learning_Python.pdf" status=200
+time="2025-05-12 12:23:45" level=info msg="GET /api/v1/documents/view?path=Learning_Python.pdf 200 29.738808ms" client_ip="::1" latency=29.738808ms method=GET path="/api/v1/documents/view?path=Learning_Python.pdf" status=200
+time="2025-05-12 12:24:04" level=info msg="Starting graceful shutdown..."
+time="2025-05-12 12:24:04" level=info msg="Disconnecting from database..."
+time="2025-05-12 12:24:04" level=info msg="Graceful shutdown completed"

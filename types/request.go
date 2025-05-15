@@ -133,5 +133,7 @@ type ExtractPageContentRequest struct {
 }
 
 type BatchUploadDocumentRequest struct {
-	
+	ToolUse string                  `json:"tool_use" binding:"required"`
+	Tags    []string                `json:"tags"`
+	Files   []*multipart.FileHeader `json:"files" binding:"required"`
 }
