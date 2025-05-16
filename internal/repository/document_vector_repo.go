@@ -30,6 +30,7 @@ type DocumentVectorRepository interface {
 	SaveBatchDocumentVector(ctx context.Context, metadata *types.DocumentMetadata, document []*types.DocumentChunk) error
 	SaveDocumentVector(ctx context.Context, metadata *types.DocumentMetadata, document *types.DocumentChunk) error
 	SearchDocumentVector(ctx context.Context, metadata *types.DocumentMetadata, queries []string, limit int) ([]*types.ChunkDocumentResponse, error)
+	RemoveDocuments(ctx context.Context, metadata *types.DocumentMetadata) error
 }
 
 type documentVectorRepository struct {
@@ -109,6 +110,19 @@ func (r *documentVectorRepository) SaveDocumentVector(ctx context.Context, metad
 	_, err := creator.Do(ctx)
 	if err != nil {
 		return fmt.Errorf("failed to save document vector: %w", err)
+	}
+	return nil
+}
+
+func (r *documentVectorRepository) RemoveDocuments(ctx context.Context, metadata *types.DocumentMetadata) error {
+	remover := r.client.Batch().ObjectsBatchDeleter().WithClassName(r.class.Class)
+	whereFilter := buildMetadataFilter(metadata)
+	if whereFilter != nil {
+		remover.WithWhere(whereFilter)
+	}
+	_, err := remover.Do(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to remove documents: %w", err)
 	}
 	return nil
 }

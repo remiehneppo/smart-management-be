@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/remiehneppo/be-task-management/internal/repository"
+	"github.com/remiehneppo/be-task-management/internal/worker"
 	"github.com/remiehneppo/be-task-management/types"
 	"github.com/remiehneppo/be-task-management/utils"
 )
@@ -18,7 +19,7 @@ var _ DocumentService = (*documentService)(nil)
 
 type DocumentService interface {
 	UploadDocument(ctx context.Context, req *types.UploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.UploadDocumentResponse, error)
-	// BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error)
+	BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error)
 	SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error)
 	AskAI(ctx context.Context, req *types.AskAIRequest) (*types.AskAIResponse, error)
 	ViewDocument(ctx context.Context, req *types.ViewDocumentRequest) (*types.ViewDocumentResponse, error)
@@ -33,6 +34,7 @@ type documentService struct {
 	pdfService          PDFService
 	documentVectorRepo  repository.DocumentVectorRepository
 	pendingDocumentRepo repository.PendingDocumentRepository
+	lockService         LockService
 }
 
 func NewDocumentService(
@@ -43,6 +45,7 @@ func NewDocumentService(
 	documentVectorRepo repository.DocumentVectorRepository,
 	pendingDocumentRepo repository.PendingDocumentRepository,
 	allowedTypes []string,
+	lockService LockService,
 ) *documentService {
 	return &documentService{
 		aiService:           aiService,
@@ -52,6 +55,7 @@ func NewDocumentService(
 		documentVectorRepo:  documentVectorRepo,
 		pendingDocumentRepo: pendingDocumentRepo,
 		allowedTypes:        allowedTypes,
+		lockService:         lockService,
 	}
 }
 
@@ -122,6 +126,8 @@ func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *typ
 		pendingDocument := &types.PendingDocument{
 			DocumentPath: uploadRes.FilePath,
 			DocumentName: uploadReq.FileName,
+			Tags:         req.Tags,
+			ToolUse:      req.ToolUse,
 			CreatedAt:    time.Now().Unix(),
 		}
 		if err := s.pendingDocumentRepo.Save(ctx, pendingDocument); err != nil {
@@ -137,6 +143,54 @@ func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *typ
 	return &types.BatchUploadDocumentResponse{
 		UploadStates: uploadStates,
 	}, nil
+}
+
+func (s *documentService) ProcessDocumentJob() worker.Do {
+	return func() error {
+		ctx := context.Background()
+		pendingDocuments, _, err := s.pendingDocumentRepo.FindAll(ctx, 0, 100)
+		if err != nil {
+			return err
+		}
+
+		for _, pendingDocument := range pendingDocuments {
+			ok, _ := s.lockService.Lock(ctx, pendingDocument.DocumentName, 20*time.Minute)
+			if !ok {
+				continue
+			}
+			chunks, err := s.pdfService.ProcessPDF(&types.ProcessPDFRequest{
+				ToolUse:  pendingDocument.ToolUse,
+				FilePath: pendingDocument.DocumentPath,
+			})
+			if err != nil {
+				continue
+			}
+			// remove documents with same name in the vector db
+			s.documentVectorRepo.RemoveDocuments(ctx, &types.DocumentMetadata{})
+			if err := s.documentVectorRepo.SaveBatchDocumentVector(
+				context.Background(),
+				&types.DocumentMetadata{
+					Title:    pendingDocument.DocumentName,
+					Tags:     pendingDocument.Tags,
+					FilePath: pendingDocument.DocumentPath,
+				},
+				chunks,
+			); err != nil {
+				continue
+			}
+			// remove the pending document
+			if err := s.pendingDocumentRepo.Remove(ctx, pendingDocument.ID); err != nil {
+				continue
+			}
+			// unlock the document
+			if err := s.lockService.ReleaseLock(ctx, pendingDocument.DocumentName); err != nil {
+				continue
+			}
+
+		}
+
+		return nil
+	}
 }
 
 func (s *documentService) SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error) {

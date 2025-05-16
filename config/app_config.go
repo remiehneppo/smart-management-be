@@ -11,12 +11,14 @@ import (
 
 type AppConfig struct {
 	Port       string       `mapstructure:"port"`
+	UseAI      bool         `mapstructure:"use_ai"`
 	Logger     LoggerConfig `mapstructure:"logger"`
 	OpenAI     OpenaiConfig `mapstructure:"openai"`
 	FileUpload struct {
 		UploadDir string `mapstructure:"upload_dir"`
 		MaxSize   int64  `mapstructure:"max_size"`
 	} `mapstructure:"file_upload"`
+	Redis    RedisConfig `mapstructure:"redis"`
 	Weaviate struct {
 		Host     string `mapstructure:"host"`
 		Scheme   string `mapstructure:"scheme"`
@@ -61,6 +63,12 @@ type OpenaiConfig struct {
 	AllowTool    bool   `mapstructure:"allow_tool"`
 }
 
+type RedisConfig struct {
+	URL      string `mapstructure:"url"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+}
+
 // LoadConfig loads configuration from environment variables and config files
 func LoadConfig(path string) (*AppConfig, error) {
 	viper.AddConfigPath(path)
@@ -84,6 +92,13 @@ func LoadConfig(path string) (*AppConfig, error) {
 	viper.BindEnv("ENVIRONMENT", "ENVIRONMENT")
 	viper.BindEnv("OPENAI.API_KEY", "OPENAI_API_KEY")
 	viper.BindEnv("WEAVIATE.API_KEY", "WEAVIATE_API_KEY")
+	viper.BindEnv("WEAVIATE.HOST", "WEAVIATE_HOST")
+	viper.BindEnv("WEAVIATE.SCHEME", "WEAVIATE_SCHEME")
+	viper.BindEnv("WEAVIATE.TEXT2VEC", "WEAVIATE_TEXT2VEC")
+	viper.BindEnv("WEAVIATE.HEADER", "WEAVIATE_HEADER")
+	viper.BindEnv("REDIS.URL", "REDIS_URL")
+	viper.BindEnv("REDIS.USERNAME", "REDIS_USERNAME")
+	viper.BindEnv("REDIS.PASSWORD", "REDIS_PASSWORD")
 
 	var config AppConfig
 	if err := viper.Unmarshal(&config); err != nil {

@@ -1,5 +1,8 @@
 # be-task-management configuration
 port: 8082
+use_ai: false
+redis:
+  url: localhost:6379
 # Logger
 logger:
   log_level: "info"

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"github.com/remiehneppo/be-task-management/config"
 	_ "github.com/remiehneppo/be-task-management/docs"
 	"github.com/remiehneppo/be-task-management/internal/database"
@@ -25,12 +26,13 @@ import (
 )
 
 type App struct {
-	api      *gin.Engine
-	port     string
-	database database.Database
-	vectorDb *weaviate.Client
-	logger   *logger.Logger
-	config   *config.AppConfig
+	api         *gin.Engine
+	port        string
+	database    database.Database
+	redisClient *redis.Client
+	vectorDb    *weaviate.Client
+	logger      *logger.Logger
+	config      *config.AppConfig
 }
 
 func NewApp(cfg *config.AppConfig) *App {
@@ -82,14 +84,27 @@ func NewApp(cfg *config.AppConfig) *App {
 		panic(err)
 	}
 	logger.Info("Weaviate live status: ", live)
+	redisOpts := &redis.Options{
+		Addr: cfg.Redis.URL,
+	}
+	if cfg.Redis.Username != "" && cfg.Redis.Password != "" {
+		redisOpts.Username = cfg.Redis.Username
+		redisOpts.Password = cfg.Redis.Password
+	}
+	redisClient := redis.NewClient(redisOpts)
+	if err := redisClient.Ping(context.Background()).Err(); err != nil {
+		logger.Fatal("error connect to redis database")
+	}
+	logger.Info("redis connected successfully")
 
 	return &App{
-		api:      api,
-		port:     cfg.Port,
-		database: db,
-		logger:   logger,
-		config:   cfg,
-		vectorDb: weaviateClient,
+		api:         api,
+		port:        cfg.Port,
+		database:    db,
+		logger:      logger,
+		config:      cfg,
+		vectorDb:    weaviateClient,
+		redisClient: redisClient,
 	}
 }
 
@@ -159,6 +174,7 @@ func (a *App) RegisterHandler() {
 	taskRepo := repository.NewTaskRepository(a.database)
 	reportRepo := repository.NewReportRepository(a.database)
 	fileMetadataRepo := repository.NewFileMetadataRepository(a.database)
+	pendingDocumentRepo := repository.NewPendingDocumentRepository(a.database)
 	documentClass := repository.DefaultDocumentClass
 	documentClass.Vectorizer = a.config.Weaviate.Text2Vec
 	documentVectorRepo := repository.NewDocumentVectorRepository(
@@ -174,7 +190,13 @@ func (a *App) RegisterHandler() {
 		a.config.JWT.Expire,
 	)
 
-	aiService := service.NewOpenAIService(a.config.OpenAI)
+	lockService := service.NewLockService(a.redisClient)
+	var aiService service.AIService
+	if !a.config.UseAI {
+		aiService = service.NewNoAIService()
+	} else {
+		aiService = service.NewOpenAIService(a.config.OpenAI)
+	}
 	aiAssistantService := service.NewAIAssistantService(aiService)
 	loginService := service.NewLoginService(jwtService, userRepo)
 	userService := service.NewUserService(userRepo)
@@ -195,7 +217,9 @@ func (a *App) RegisterHandler() {
 		fileService,
 		pdfService,
 		documentVectorRepo,
+		pendingDocumentRepo,
 		[]string{".pdf"},
+		lockService,
 	)
 
 	aiAssistantHandler := handler.NewAIAssistantHandler(aiAssistantService)
