@@ -40,7 +40,7 @@ type pdfService struct {
 }
 
 var DefaultDocumentServiceConfig = DocumentServiceConfig{
-	MaxChunkSize: 2048,
+	MaxChunkSize: 1024,
 	OverlapSize:  128,
 	BatchSize:    3,
 }

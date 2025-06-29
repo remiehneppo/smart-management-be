@@ -88,7 +88,8 @@ func (r *documentVectorRepository) SaveBatchDocumentVector(ctx context.Context, 
 				},
 			)
 		}
-		_, err := batcher.Do(ctx)
+		result, err := batcher.Do(ctx)
+		_ = result // Ignore the result as we are not using it
 		if err != nil {
 			return fmt.Errorf("failed to save batch document vector: %w", err)
 		}

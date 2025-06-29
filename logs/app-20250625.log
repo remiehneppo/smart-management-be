@@ -1,0 +1,29 @@
+time="2025-06-25 21:25:31" level=info msg="Connecting to database..."
+time="2025-06-25 21:26:07" level=info msg="Connecting to database..."
+time="2025-06-25 21:26:07" level=info msg="Database connected successfully"
+time="2025-06-25 21:26:07" level=info msg="Weaviate live status: true"
+time="2025-06-25 21:26:07" level=info msg="redis connected successfully"
+time="2025-06-25 21:28:15" level=info msg="Connecting to database..."
+time="2025-06-25 21:28:15" level=info msg="Database connected successfully"
+time="2025-06-25 21:28:15" level=info msg="Weaviate live status: true"
+time="2025-06-25 21:28:15" level=info msg="redis connected successfully"
+time="2025-06-25 21:28:47" level=info msg="Connecting to database..."
+time="2025-06-25 21:28:47" level=info msg="Database connected successfully"
+time="2025-06-25 21:28:47" level=info msg="Weaviate live status: true"
+time="2025-06-25 21:28:47" level=info msg="redis connected successfully"
+time="2025-06-25 21:29:17" level=info msg="Server starting on port 8088"
+time="2025-06-25 21:29:36" level=info msg="GET /swagger/index.html 200 441.516µs" client_ip="::1" latency="441.516µs" method=GET path=/swagger/index.html status=200
+time="2025-06-25 21:29:36" level=info msg="GET /swagger/swagger-ui.css 200 295.881µs" client_ip="::1" latency="295.881µs" method=GET path=/swagger/swagger-ui.css status=200
+time="2025-06-25 21:29:36" level=info msg="GET /swagger/swagger-ui-bundle.js 200 416.771µs" client_ip="::1" latency="416.771µs" method=GET path=/swagger/swagger-ui-bundle.js status=200
+time="2025-06-25 21:29:36" level=info msg="GET /swagger/swagger-ui-standalone-preset.js 200 309.302µs" client_ip="::1" latency="309.302µs" method=GET path=/swagger/swagger-ui-standalone-preset.js status=200
+time="2025-06-25 21:29:37" level=info msg="GET /swagger/favicon-32x32.png 200 81.031µs" client_ip="::1" latency="81.031µs" method=GET path=/swagger/favicon-32x32.png status=200
+time="2025-06-25 21:29:37" level=info msg="GET /swagger/doc.json 200 352.807µs" client_ip="::1" latency="352.807µs" method=GET path=/swagger/doc.json status=200
+time="2025-06-25 21:30:00" level=info msg="POST /api/v1/auth/login 200 5.112921ms" client_ip="::1" latency=5.112921ms method=POST path=/api/v1/auth/login status=200
+time="2025-06-25 21:34:21" level=info msg="POST /api/v1/documents/upload 200 2m34.390908496s" client_ip="::1" latency=2m34.390908496s method=POST path=/api/v1/documents/upload status=200
+time="2025-06-25 21:36:27" level=error msg="POST /api/v1/documents/search 500 1m21.582324622s" client_ip="::1" latency=1m21.582324622s method=POST path=/api/v1/documents/search status=500
+time="2025-06-25 22:09:26" level=info msg="Connecting to database..."
+time="2025-06-25 22:09:26" level=info msg="Database connected successfully"
+time="2025-06-25 22:09:26" level=info msg="Weaviate live status: true"
+time="2025-06-25 22:09:26" level=info msg="redis connected successfully"
+time="2025-06-25 22:09:55" level=info msg="Server starting on port 8088"
+time="2025-06-25 22:10:35" level=info msg="POST /api/v1/documents/upload 200 36.751064141s" client_ip="::1" latency=36.751064141s method=POST path=/api/v1/documents/upload status=200

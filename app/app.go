@@ -176,7 +176,15 @@ func (a *App) RegisterHandler() {
 	fileMetadataRepo := repository.NewFileMetadataRepository(a.database)
 	pendingDocumentRepo := repository.NewPendingDocumentRepository(a.database)
 	documentClass := repository.DefaultDocumentClass
-	documentClass.Vectorizer = a.config.Weaviate.Text2Vec
+	documentClass.Vectorizer = a.config.Weaviate.Text2Vec.Module
+	moduleConfig := make(map[string]interface{})
+	if a.config.Weaviate.Text2Vec.Model != "" {
+		moduleConfig[a.config.Weaviate.Text2Vec.Module] = map[string]interface{}{
+			"model":       a.config.Weaviate.Text2Vec.Model,
+			"apiEndpoint": a.config.Weaviate.Text2Vec.APIEndpoint,
+		}
+	}
+	documentClass.ModuleConfig = moduleConfig
 	documentVectorRepo := repository.NewDocumentVectorRepository(
 		context.Background(),
 		a.vectorDb,

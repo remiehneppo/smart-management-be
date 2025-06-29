@@ -20,15 +20,16 @@ type AppConfig struct {
 	} `mapstructure:"file_upload"`
 	Redis    RedisConfig `mapstructure:"redis"`
 	Weaviate struct {
-		Host     string `mapstructure:"host"`
-		Scheme   string `mapstructure:"scheme"`
-		Text2Vec string `mapstructure:"text2vec"`
-		APIKey   string `mapstructure:"API_KEY"`
+		Host     string         `mapstructure:"host"`
+		Scheme   string         `mapstructure:"scheme"`
+		Text2Vec Text2VecConfig `mapstructure:"text2vec"`
+		APIKey   string         `mapstructure:"API_KEY"`
 		Header   []struct {
 			Key   string `mapstructure:"key"`
 			Value string `mapstructure:"value"`
 		} `mapstructure:"header"`
-	}
+	} `mapstructure:"weaviate"`
+
 	MongoDB struct {
 		URI      string `mapstructure:"URI"`
 		Database string `mapstructure:"DATABASE"`
@@ -42,6 +43,12 @@ type AppConfig struct {
 		SystemPrompt string `mapstructure:"system_prompt"`
 	} `mapstructure:"rag"`
 	Environment string `mapstructure:"ENVIRONMENT"`
+}
+
+type Text2VecConfig struct {
+	Module      string `mapstructure:"module"`
+	APIEndpoint string `mapstructure:"api_endpoint"`
+	Model       string `mapstructure:"model"`
 }
 
 // Config holds configuration for the logger
