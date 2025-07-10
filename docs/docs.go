@@ -306,6 +306,74 @@ const docTemplate = `{
                 }
             }
         },
+        "/documents/batch-upload": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Uploads multiple PDF files and processes them asynchronously in the background",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Upload multiple PDF documents asynchronously",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "PDF files to upload (multiple files with same field name)",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Document metadata in JSON format",
+                        "name": "metadata",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Files uploaded successfully",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/types.BatchUploadDocumentResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "File upload error or invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/types.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/types.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/documents/demo-load-text": {
             "post": {
                 "description": "Loads text from a PDF document for demonstration purposes",
@@ -1389,6 +1457,17 @@ const docTemplate = `{
                 }
             }
         },
+        "types.BatchUploadDocumentResponse": {
+            "type": "object",
+            "properties": {
+                "upload_state": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/types.UploadStatus"
+                    }
+                }
+            }
+        },
         "types.ChatResponse": {
             "type": "object",
             "properties": {
@@ -1699,6 +1778,20 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "types.UploadStatus": {
+            "type": "object",
+            "properties": {
+                "file_name": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         },
