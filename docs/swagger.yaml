@@ -28,6 +28,13 @@ definitions:
           $ref: '#/definitions/types.ChunkDocumentResponse'
         type: array
     type: object
+  types.BatchUploadDocumentResponse:
+    properties:
+      upload_state:
+        items:
+          $ref: '#/definitions/types.UploadStatus'
+        type: array
+    type: object
   types.ChatResponse:
     properties:
       content:
@@ -234,6 +241,15 @@ definitions:
       title:
         type: string
     type: object
+  types.UploadStatus:
+    properties:
+      file_name:
+        type: string
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
   types.User:
     properties:
       created_at:
@@ -436,6 +452,48 @@ paths:
       security:
       - BearerAuth: []
       summary: Ask AI a question
+      tags:
+      - documents
+  /documents/batch-upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads multiple PDF files and processes them asynchronously in
+        the background
+      parameters:
+      - description: PDF files to upload (multiple files with same field name)
+        in: formData
+        name: files
+        required: true
+        type: file
+      - description: Document metadata in JSON format
+        in: formData
+        name: metadata
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Files uploaded successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.BatchUploadDocumentResponse'
+              type: object
+        "400":
+          description: File upload error or invalid request
+          schema:
+            $ref: '#/definitions/types.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/types.Response'
+      security:
+      - BearerAuth: []
+      summary: Upload multiple PDF documents asynchronously
       tags:
       - documents
   /documents/demo-load-text:

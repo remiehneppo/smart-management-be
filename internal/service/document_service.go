@@ -13,17 +13,19 @@ import (
 	"github.com/remiehneppo/be-task-management/internal/worker"
 	"github.com/remiehneppo/be-task-management/types"
 	"github.com/remiehneppo/be-task-management/utils"
+	"github.com/sirupsen/logrus"
 )
 
 var _ DocumentService = (*documentService)(nil)
 
 type DocumentService interface {
 	UploadDocument(ctx context.Context, req *types.UploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.UploadDocumentResponse, error)
-	BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error)
+	BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest) (*types.BatchUploadDocumentResponse, error)
 	SearchDocument(ctx context.Context, req *types.SearchDocumentRequest) (*types.SearchDocumentResponse, error)
 	AskAI(ctx context.Context, req *types.AskAIRequest) (*types.AskAIResponse, error)
 	ViewDocument(ctx context.Context, req *types.ViewDocumentRequest) (*types.ViewDocumentResponse, error)
 	DemoGetText(ctx context.Context, req *types.DemoGetTextRequest, fileHeader *multipart.FileHeader) (*types.DemoGetTextResponse, error)
+	ProcessDocumentJob() worker.Do
 }
 
 type documentService struct {
@@ -46,7 +48,7 @@ func NewDocumentService(
 	pendingDocumentRepo repository.PendingDocumentRepository,
 	allowedTypes []string,
 	lockService LockService,
-) *documentService {
+) DocumentService {
 	return &documentService{
 		aiService:           aiService,
 		ragService:          ragService,
@@ -99,7 +101,7 @@ func (s *documentService) UploadDocument(ctx context.Context, req *types.UploadD
 	}, nil
 }
 
-func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest, fileHeader *multipart.FileHeader) (*types.BatchUploadDocumentResponse, error) {
+func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *types.BatchUploadDocumentRequest) (*types.BatchUploadDocumentResponse, error) {
 
 	uploadStates := make([]*types.UploadStatus, 0)
 
@@ -147,6 +149,7 @@ func (s *documentService) BatchUploadDocumentAsync(ctx context.Context, req *typ
 
 func (s *documentService) ProcessDocumentJob() worker.Do {
 	return func() error {
+		logrus.Info("Processing pending documents...")
 		ctx := context.Background()
 		pendingDocuments, _, err := s.pendingDocumentRepo.FindAll(ctx, 0, 100)
 		if err != nil {

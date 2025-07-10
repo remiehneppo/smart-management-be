@@ -13,6 +13,7 @@ var _ DocumentHandler = (*documentHandler)(nil)
 
 type DocumentHandler interface {
 	UploadPDF(ctx *gin.Context)
+	BatchUploadPDFAsync(ctx *gin.Context)
 	SearchDocument(ctx *gin.Context)
 	AskAI(ctx *gin.Context)
 	ViewDocument(ctx *gin.Context)
@@ -249,6 +250,67 @@ func (h *documentHandler) DemoloadText(ctx *gin.Context) {
 	ctx.JSON(200, types.Response{
 		Status:  true,
 		Message: "Text loaded successfully",
+		Data:    res,
+	})
+}
+
+// BatchUploadPDFAsync godoc
+// @Summary Upload multiple PDF documents asynchronously
+// @Description Uploads multiple PDF files and processes them asynchronously in the background
+// @Tags documents
+// @Accept multipart/form-data
+// @Produce json
+// @Param files formData file true "PDF files to upload (multiple files with same field name)"
+// @Param metadata formData string true "Document metadata in JSON format"
+// @Success 200 {object} types.Response{data=types.BatchUploadDocumentResponse} "Files uploaded successfully"
+// @Failure 400 {object} types.Response "File upload error or invalid request"
+// @Failure 500 {object} types.Response "Internal server error"
+// @Security BearerAuth
+// @Router /documents/batch-upload [post]
+func (h *documentHandler) BatchUploadPDFAsync(ctx *gin.Context) {
+	form, err := ctx.MultipartForm()
+	if err != nil {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "Invalid request: unable to parse multipart form",
+		})
+		return
+	}
+	files := form.File["files"]
+	if len(files) == 0 {
+		ctx.JSON(400, types.Response{
+			Status:  false,
+			Message: "Invalid request: no files provided",
+		})
+		return
+	}
+
+	var req types.BatchUploadDocumentRequest
+	metadata := ctx.PostForm("metadata")
+	if metadata != "" {
+		if err := json.Unmarshal([]byte(metadata), &req); err != nil {
+			ctx.JSON(400, types.Response{
+				Status:  false,
+				Message: "Invalid metadata format",
+			})
+			return
+		}
+	} else {
+		req = types.BatchUploadDocumentRequest{}
+	}
+	req.Files = files
+
+	res, err := h.documentService.BatchUploadDocumentAsync(ctx, &req)
+	if err != nil {
+		ctx.JSON(500, types.Response{
+			Status:  false,
+			Message: "Internal server error",
+		})
+		return
+	}
+	ctx.JSON(200, types.Response{
+		Status:  true,
+		Message: "Files uploaded successfully",
 		Data:    res,
 	})
 }

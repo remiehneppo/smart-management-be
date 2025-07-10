@@ -19,6 +19,7 @@ import (
 	"github.com/remiehneppo/be-task-management/internal/middleware"
 	"github.com/remiehneppo/be-task-management/internal/repository"
 	"github.com/remiehneppo/be-task-management/internal/service"
+	"github.com/remiehneppo/be-task-management/internal/worker"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
@@ -32,6 +33,7 @@ type App struct {
 	redisClient *redis.Client
 	vectorDb    *weaviate.Client
 	logger      *logger.Logger
+	worker      *worker.Worker
 	config      *config.AppConfig
 }
 
@@ -105,6 +107,7 @@ func NewApp(cfg *config.AppConfig) *App {
 		config:      cfg,
 		vectorDb:    weaviateClient,
 		redisClient: redisClient,
+		worker:      worker.NewWorker(),
 	}
 }
 
@@ -127,6 +130,10 @@ func (a *App) Start() error {
 			serverErrors <- err
 		}
 	}()
+
+	// Start worker
+	a.worker.Start()
+	a.logger.Info("Worker started")
 
 	// Channel for listening to OS signals
 	shutdown := make(chan os.Signal, 1)
@@ -237,6 +244,11 @@ func (a *App) RegisterHandler() {
 	documentHandler := handler.NewDocumentHandler(documentService)
 
 	authMiddleware := middleware.NewAuthMiddleware(jwtService)
+
+	a.worker.RegisterIntervalJob(
+		60,
+		documentService.ProcessDocumentJob(),
+	)
 
 	a.api.Use(middleware.CorsMiddleware)
 	// Register routes

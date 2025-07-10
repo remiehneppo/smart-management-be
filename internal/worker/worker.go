@@ -23,23 +23,24 @@ type ScheduleJob struct {
 	Cron string
 }
 
-type IntervalWorker struct {
+type Worker struct {
 	intervalJob []*IntervalJob
 	scheduleJob []*ScheduleJob
 	logger      *logger.Logger
 	c           *cron.Cron
 }
 
-func NewIntervalWorker() *IntervalWorker {
-	return &IntervalWorker{
+func NewWorker() *Worker {
+	return &Worker{
 		intervalJob: make([]*IntervalJob, 0),
 		scheduleJob: make([]*ScheduleJob, 0),
 		c:           cron.New(),
 	}
 }
 
-func (w *IntervalWorker) Start() {
+func (w *Worker) Start() {
 	for _, job := range w.intervalJob {
+		
 		go func(job *IntervalJob) {
 			ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 			defer stop()
@@ -70,14 +71,14 @@ func (w *IntervalWorker) Start() {
 	}
 }
 
-func (w *IntervalWorker) RegisterIntervalJob(intervalTime int64, do Do) {
+func (w *Worker) RegisterIntervalJob(intervalTime int64, do Do) {
 	w.intervalJob = append(w.intervalJob, &IntervalJob{
 		IntervalTime: intervalTime,
 		Do:           do,
 	})
 }
 
-func (w *IntervalWorker) RegisterScheduleJob(cron string, do Do) {
+func (w *Worker) RegisterScheduleJob(cron string, do Do) {
 	w.scheduleJob = append(w.scheduleJob, &ScheduleJob{
 		Cron: cron,
 		Do:   do,
