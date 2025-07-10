@@ -461,15 +461,17 @@ paths:
       description: Uploads multiple PDF files and processes them asynchronously in
         the background
       parameters:
-      - description: PDF files to upload (multiple files with same field name)
+      - collectionFormat: multi
+        description: Multiple PDF files to upload
         in: formData
+        items:
+          type: file
         name: files
         required: true
-        type: file
-      - description: Document metadata in JSON format
+        type: array
+      - description: Document metadata in JSON format (optional)
         in: formData
         name: metadata
-        required: true
         type: string
       produces:
       - application/json

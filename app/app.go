@@ -294,6 +294,7 @@ func (a *App) RegisterHandler() {
 	documentGroup.POST("/upload", documentHandler.UploadPDF)
 	documentGroup.POST("/search", documentHandler.SearchDocument)
 	documentGroup.POST("/ask-ai", documentHandler.AskAI)
+	documentGroup.POST("/batch-upload", documentHandler.BatchUploadPDFAsync)
 	documentGroup.GET("/view", documentHandler.ViewDocument)
 
 	// Middleware

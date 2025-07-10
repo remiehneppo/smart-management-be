@@ -326,18 +326,21 @@ const docTemplate = `{
                 "summary": "Upload multiple PDF documents asynchronously",
                 "parameters": [
                     {
-                        "type": "file",
-                        "description": "PDF files to upload (multiple files with same field name)",
+                        "type": "array",
+                        "items": {
+                            "type": "file"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Multiple PDF files to upload",
                         "name": "files",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "Document metadata in JSON format",
+                        "description": "Document metadata in JSON format (optional)",
                         "name": "metadata",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     }
                 ],
                 "responses": {

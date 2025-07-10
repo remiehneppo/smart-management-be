@@ -260,8 +260,8 @@ func (h *documentHandler) DemoloadText(ctx *gin.Context) {
 // @Tags documents
 // @Accept multipart/form-data
 // @Produce json
-// @Param files formData file true "PDF files to upload (multiple files with same field name)"
-// @Param metadata formData string true "Document metadata in JSON format"
+// @Param files formData []file true "Multiple PDF files to upload" collectionFormat(multi)
+// @Param metadata formData string false "Document metadata in JSON format (optional)"
 // @Success 200 {object} types.Response{data=types.BatchUploadDocumentResponse} "Files uploaded successfully"
 // @Failure 400 {object} types.Response "File upload error or invalid request"
 // @Failure 500 {object} types.Response "Internal server error"

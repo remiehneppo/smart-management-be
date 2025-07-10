@@ -137,6 +137,9 @@ func (m *mongoDatabase) Query(ctx context.Context, collection string, filter int
 	if limit > 0 {
 		ops.SetLimit(limit)
 	}
+	if filter == nil {
+		filter = bson.D{} // Use an empty filter if nil is provided
+	}
 	cursor, err := coll.Find(ctx, filter, ops)
 	if err != nil {
 		return err
@@ -157,10 +160,20 @@ func (m *mongoDatabase) Aggregate(ctx context.Context, collection string, pipeli
 
 func (m *mongoDatabase) Count(ctx context.Context, collection string, filter interface{}) (int64, error) {
 	coll := m.mongoClient.Database(m.database).Collection(collection)
+
+	// Handle nil filter by using empty bson.D{} which matches all documents
+	if filter == nil {
+		filter = bson.D{}
+	}
+
 	count, err := coll.CountDocuments(ctx, filter)
 	if err != nil {
 		return 0, err
 	}
+
+	// Optional: Add logging for debugging
+	// log.Printf("Count operation on collection '%s' with filter %+v returned: %d", collection, filter, count)
+
 	return count, nil
 }
 
