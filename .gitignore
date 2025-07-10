@@ -3,3 +3,4 @@ __debug*
 /temp
 /test_data
 /upload
+local-config.yaml
