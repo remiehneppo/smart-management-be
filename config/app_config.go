@@ -77,10 +77,9 @@ type RedisConfig struct {
 }
 
 // LoadConfig loads configuration from environment variables and config files
-func LoadConfig(path string) (*AppConfig, error) {
-	viper.AddConfigPath(path)
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
+func LoadConfig(cfgYml string) (*AppConfig, error) {
+	// Set the file name and type for Viper
+	viper.SetConfigFile(cfgYml)
 	godotenv.Load()
 	// Try to read the config file
 	viper.ReadInConfig()

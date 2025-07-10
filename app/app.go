@@ -107,7 +107,7 @@ func NewApp(cfg *config.AppConfig) *App {
 		config:      cfg,
 		vectorDb:    weaviateClient,
 		redisClient: redisClient,
-		worker:      worker.NewWorker(),
+		worker:      worker.NewWorker(logger),
 	}
 }
 

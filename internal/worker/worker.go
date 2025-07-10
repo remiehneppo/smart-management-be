@@ -30,17 +30,18 @@ type Worker struct {
 	c           *cron.Cron
 }
 
-func NewWorker() *Worker {
+func NewWorker(logger *logger.Logger) *Worker {
 	return &Worker{
 		intervalJob: make([]*IntervalJob, 0),
 		scheduleJob: make([]*ScheduleJob, 0),
 		c:           cron.New(),
+		logger:      logger,
 	}
 }
 
 func (w *Worker) Start() {
 	for _, job := range w.intervalJob {
-		
+
 		go func(job *IntervalJob) {
 			ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 			defer stop()
