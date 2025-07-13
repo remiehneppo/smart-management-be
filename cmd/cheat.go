@@ -5,9 +5,12 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/remiehneppo/be-task-management/config"
 	"github.com/remiehneppo/be-task-management/internal/service"
-	"github.com/remiehneppo/be-task-management/types"
+	"github.com/remiehneppo/be-task-management/utils"
+	"github.com/sashabaranov/go-openai"
 	"github.com/spf13/cobra"
 )
 
@@ -23,23 +26,46 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("cheat called")
-		pdfService := service.NewPDFService(service.DefaultDocumentServiceConfig)
-
-		pages, err := pdfService.ExtractPageContent(&types.ExtractPageContentRequest{
-			ToolUse:  "pdftotext",
-			FilePath: "./test_data/ShipDesign.pdf",
-			FromPage: 1,
-			ToPage:   10,
-		})
-
+		cfgYml, _ := cmd.Flags().GetString("config")
+		cfg, err := config.LoadConfig(cfgYml)
 		if err != nil {
-			fmt.Println("Error extracting pages:", err)
+			fmt.Println("Error loading config:", err)
 			return
 		}
-		for _, page := range pages {
-			fmt.Println("Page content:", page)
+		vlmService := service.NewVLMService(cfg.VLM)
+		_ = vlmService
+		imagePath := "test_data/images/image.png"
+		image, err := os.ReadFile(imagePath)
+		if err != nil {
+			fmt.Println("Error reading image file:", err)
+			return
 		}
-		// Example of using the PDF service to extract text from a PDF file
+		base64Encoding := utils.ConvertToBase64URL(image)
+
+		messages := []openai.ChatCompletionMessage{
+			{
+				Role: openai.ChatMessageRoleUser,
+				MultiContent: []openai.ChatMessagePart{
+					{
+						Type: openai.ChatMessagePartTypeText,
+						Text: "Trích xuất văn bản trong tài liệu sau dưới dạng markdown. Với các ảnh có trong văn bản, hãy đặt mô tả nội dung ảnh trong alt text markdown. Chỉ trích xuất văn bản, không nhận xét gì thêm",
+					},
+					{
+						Type: openai.ChatMessagePartTypeImageURL,
+						ImageURL: &openai.ChatMessageImageURL{
+							URL: base64Encoding,
+						},
+					},
+				},
+			},
+		}
+
+		res, err := vlmService.ChatMultiContent(cmd.Context(), messages)
+		if err != nil {
+			fmt.Println("Error during chat with VLM:", err)
+			return
+		}
+		fmt.Println("Response from VLM:", res)
 
 	},
 }
@@ -56,4 +82,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// cheatCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	cheatCmd.Flags().StringP("config", "c", "config.yaml", "Path to the configuration file")
 }

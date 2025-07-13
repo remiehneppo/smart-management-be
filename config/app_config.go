@@ -14,6 +14,7 @@ type AppConfig struct {
 	UseAI      bool         `mapstructure:"use_ai"`
 	Logger     LoggerConfig `mapstructure:"logger"`
 	OpenAI     OpenaiConfig `mapstructure:"openai"`
+	VLM        VLMConfig    `mapstructure:"vlm"`
 	FileUpload struct {
 		UploadDir string `mapstructure:"upload_dir"`
 		MaxSize   int64  `mapstructure:"max_size"`
@@ -70,6 +71,12 @@ type OpenaiConfig struct {
 	AllowTool    bool   `mapstructure:"allow_tool"`
 }
 
+type VLMConfig struct {
+	BaseUrl string `mapstructure:"base_url"`
+	Model   string `mapstructure:"model"`
+	APIKey  string `mapstructure:"API_KEY"`
+}
+
 type RedisConfig struct {
 	URL      string `mapstructure:"url"`
 	Username string `mapstructure:"username"`
@@ -97,6 +104,7 @@ func LoadConfig(cfgYml string) (*AppConfig, error) {
 	viper.BindEnv("JWT.EXPIRE", "JWT_EXPIRE")
 	viper.BindEnv("ENVIRONMENT", "ENVIRONMENT")
 	viper.BindEnv("OPENAI.API_KEY", "OPENAI_API_KEY")
+	viper.BindEnv("VLM.API_KEY", "VLM_API_KEY")
 	viper.BindEnv("WEAVIATE.API_KEY", "WEAVIATE_API_KEY")
 	viper.BindEnv("WEAVIATE.HOST", "WEAVIATE_HOST")
 	viper.BindEnv("WEAVIATE.SCHEME", "WEAVIATE_SCHEME")

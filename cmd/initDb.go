@@ -28,7 +28,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("init-db called")
-		cfg, err := config.LoadConfig(".")
+		cfgYml, _ := cmd.Flags().GetString("config")
+		cfg, err := config.LoadConfig(cfgYml)
 		if err != nil {
 			fmt.Println("Error loading config:", err)
 			return
@@ -108,4 +109,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// initDbCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	initDbCmd.Flags().StringP("config", "c", "config.yaml", "Path to the configuration file")
 }

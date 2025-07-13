@@ -1,5 +1,10 @@
 package utils
 
+import (
+	"encoding/base64"
+	"net/http"
+)
+
 // Helper functions
 func ParseStringArray(v interface{}) []string {
 	if v == nil {
@@ -14,4 +19,10 @@ func ParseStringArray(v interface{}) []string {
 		result[i] = item.(string)
 	}
 	return result
+}
+
+func ConvertToBase64URL(data []byte) string {
+	mimeType := http.DetectContentType(data)
+	encoded := base64.StdEncoding.EncodeToString(data)
+	return "data:" + mimeType + ";base64," + encoded
 }
