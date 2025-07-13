@@ -32,7 +32,6 @@ type AIService interface {
 }
 
 type OpenAIService struct {
-	systemPromt   string
 	client        *openai.Client
 	allowTool     bool
 	functionsCall map[string]types.FunctionHandler
@@ -45,7 +44,6 @@ func NewOpenAIService(aiCfg config.OpenaiConfig) *OpenAIService {
 	config.BaseURL = aiCfg.BaseUrl
 	client := openai.NewClientWithConfig(config)
 	return &OpenAIService{
-		systemPromt:   aiCfg.SystemPrompt,
 		client:        client,
 		functionsCall: make(map[string]types.FunctionHandler),
 		tools:         make([]openai.Tool, 0),
@@ -57,10 +55,7 @@ func NewOpenAIService(aiCfg config.OpenaiConfig) *OpenAIService {
 func (s *OpenAIService) Chat(ctx context.Context, messages []types.Message) (*types.Message, error) {
 	// Convert our Message type to OpenAI chat messages
 	openaiMessages := make([]openai.ChatCompletionMessage, 0)
-	openaiMessages = append(openaiMessages, openai.ChatCompletionMessage{
-		Role:    openai.ChatMessageRoleSystem,
-		Content: s.systemPromt,
-	})
+
 	for _, msg := range messages {
 		openaiMessages = append(openaiMessages, openai.ChatCompletionMessage{
 			Role:    openai.ChatMessageRoleUser,

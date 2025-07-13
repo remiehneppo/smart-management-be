@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/remiehneppo/be-task-management/types"
+	"github.com/sashabaranov/go-openai"
 )
 
 var _ AIAssistantService = (*aiAssistantService)(nil)
@@ -15,12 +16,14 @@ type AIAssistantService interface {
 }
 
 type aiAssistantService struct {
-	aiService AIService
+	aiService    AIService
+	systemPrompt string
 }
 
-func NewAIAssistantService(aiService AIService) *aiAssistantService {
+func NewAIAssistantService(aiService AIService, systemPrompt string) *aiAssistantService {
 	return &aiAssistantService{
-		aiService: aiService,
+		aiService:    aiService,
+		systemPrompt: systemPrompt,
 	}
 }
 
@@ -37,9 +40,18 @@ func (s *aiAssistantService) ChatWithAssistant(ctx context.Context, req types.Ch
 }
 
 func (s *aiAssistantService) ChatWithAssistantStateless(ctx context.Context, req types.ChatStatelessRequest) (*types.ChatResponse, error) {
+	messages := make([]types.Message, 0)
+	// Add system prompt if it exists
+	if s.systemPrompt != "" {
+		messages = append(messages, types.Message{
+			Role:    openai.ChatMessageRoleSystem,
+			Content: s.systemPrompt,
+		})
+	}
+	messages = append(messages, req.Messages...)
 	res, err := s.aiService.Chat(
 		ctx,
-		req.Messages,
+		messages,
 	)
 	if err != nil {
 		return nil, err

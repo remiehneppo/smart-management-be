@@ -212,7 +212,7 @@ func (a *App) RegisterHandler() {
 	} else {
 		aiService = service.NewOpenAIService(a.config.OpenAI)
 	}
-	aiAssistantService := service.NewAIAssistantService(aiService)
+	aiAssistantService := service.NewAIAssistantService(aiService, a.config.OpenAI.SystemPrompt)
 	loginService := service.NewLoginService(jwtService, userRepo)
 	userService := service.NewUserService(userRepo)
 	taskService := service.NewTaskService(taskRepo, reportRepo, userRepo)
